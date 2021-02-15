@@ -2,25 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DiceRoll : MonoBehaviour
+public class Tile : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-           
+        
     }
+
+    public Tile[] NextTiles;
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    public int DiceValue;
-
-    public void RollDice()
-    {
-        DiceValue = Random.Range(1, 7);
-        Debug.Log(DiceValue);
     }
 }
