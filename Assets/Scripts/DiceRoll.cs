@@ -9,7 +9,8 @@ public class DiceRoll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-           m_Renderer = GetComponent<Renderer>();
+        m_Renderer = GetComponent<Renderer>();
+        theStateManager = GameObject.FindObjectOfType<StateManager>();
     }
 
     // Update is called once per frame
@@ -18,22 +19,24 @@ public class DiceRoll : MonoBehaviour
         
     }
 
-    public int DiceValue;
+    StateManager theStateManager;
 
-    public bool IsDoneRolling = false;
+    public int DiceValue;
 
     public Texture2D[] DiceTexture;
 
-    public void NewTurn()
-    {
-        IsDoneRolling = false;
-    }
     public void RollDice()
     {
+        if (theStateManager.IsDoneRolling == true)
+        {
+            //Al gerolt
+            return;
+        }
+
         DiceValue = Random.Range(1, 7);
         Debug.Log(DiceValue);
         // met een animatie zouden we eerst moeten wachten op het einde van de animatie
-        IsDoneRolling = true;
+        theStateManager.IsDoneRolling = true;
 
         switch (DiceValue)
         {

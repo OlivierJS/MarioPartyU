@@ -156,3 +156,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingTile: {fileID: 0}
+  playerID: 0
