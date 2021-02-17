@@ -54,8 +54,8 @@ public class Player : MonoBehaviour
                 {
                     finalTile = finalTile.NextTiles[0];
                 }
-
-                finalTile = finalTile.NextTiles[0];
+                Debug.Log(finalTile.transform.position);
+               
             }
         }
         
