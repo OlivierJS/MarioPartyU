@@ -34,7 +34,7 @@ public class DiceRoll : MonoBehaviour
         }
 
         DiceValue = Random.Range(1, 7);
-        Debug.Log(DiceValue);
+        Debug.Log("You rolled: " + DiceValue);
         // met een animatie zouden we eerst moeten wachten op het einde van de animatie
         theStateManager.IsDoneRolling = true;
 
