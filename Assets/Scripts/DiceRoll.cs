@@ -29,7 +29,7 @@ public class DiceRoll : MonoBehaviour
     {
         if (theStateManager.IsDoneRolling == true)
         {
-            //Al gerolt
+            //Al gerold
             return;
         }
 
