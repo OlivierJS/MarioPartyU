@@ -29,12 +29,12 @@ public class Player : MonoBehaviour
 
     void OnMouseUp()
     {
-        Debug.Log("HI");
+        //Debug.Log("HI");
         
         if (theStateManager.IsDoneRolling == false || theStateManager.IsDoneClicking == true || theStateManager.currentPlayerID != playerID)
         {
             //je kan nog niet bewegen (nog geen roll of al geklikt)
-            Debug.Log(playerID);
+            //Debug.Log(playerID);
             return;
         }
 
@@ -73,11 +73,11 @@ public class Player : MonoBehaviour
                 if (amountOfCoins > 10)
                 {
                     amountOfStars += 1;
-                    Debug.Log("Your Got A Star! Amount of Stars: " + amountOfStars);
+                    //Debug.Log("Your Got A Star! Amount of Stars: " + amountOfStars);
                 }
                 else
                 {
-                    Debug.Log("Not Enough Coins! Amount of Stars: " + amountOfStars);
+                    //Debug.Log("Not Enough Coins! Amount of Stars: " + amountOfStars);
                 }
                 theStateManager.IsCollectingStar = false;
             }
@@ -98,12 +98,12 @@ public class Player : MonoBehaviour
             {
                 //Nothing
                 case 0:
-                    Debug.Log("You have this amount of coins: " + amountOfCoins);
+                    //Debug.Log("You have this amount of coins: " + amountOfCoins);
                     break;
                 //+3 coins
                 case 1:
                     amountOfCoins += 3;
-                    Debug.Log("You have this amount of coins: " + amountOfCoins);
+                    //Debug.Log("You have this amount of coins: " + amountOfCoins);
                     break;
                 //-3 coins
                 case 2:
@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
                     {
                         amountOfCoins = 0;
                     }
-                    Debug.Log("You have this amount of coins: " + amountOfCoins);
+                    //Debug.Log("You have this amount of coins: " + amountOfCoins);
                     break;
             }
 
