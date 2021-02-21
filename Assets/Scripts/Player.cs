@@ -60,11 +60,8 @@ public class Player : MonoBehaviour
                 {
                     finalTile = finalTile.NextTiles[0];
                 }
-<<<<<<< HEAD
                 Debug.Log(finalTile.transform.position);
                
-=======
->>>>>>> aeeec6e840e818ff9d11c28c8e9d6b3d1e321988
             }
         }
         
