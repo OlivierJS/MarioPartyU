@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
 
     public int playerID;
 
+    public int amountOfCoins = 0;
+    public int amountOfStars = 0;
+
     StateManager theStateManager;
     // Update is called once per frame
     void Update()
@@ -46,12 +49,13 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (finalTile.NextTiles == null || finalTile.NextTiles.Length == 0)
+                /*if (finalTile.NextTiles == null || finalTile.NextTiles.Length == 0)
                 {
                     Debug.Log("Good job!");
                     Destroy(gameObject);
                 }
-                else if (finalTile.NextTiles.Length > 0)
+                else */
+                if (finalTile.NextTiles.Length > 0)
                 {
                     //keuze van speler moet nog geïmplementeerd worden
                     finalTile = finalTile.NextTiles[0];
@@ -63,6 +67,22 @@ public class Player : MonoBehaviour
                 Debug.Log(finalTile.transform.position);
                
             }
+
+            if (finalTile.tileTypeID == 3)
+            {
+                theStateManager.IsCollectingStar = true;
+                this.transform.position = finalTile.transform.position;
+                if (amountOfCoins > 10)
+                {
+                    amountOfStars += 1;
+                    Debug.Log("Your Got A Star! Amount of Stars: " + amountOfStars);
+                }
+                else
+                {
+                    Debug.Log("Not Enough Coins! Amount of Stars: " + amountOfStars);
+                }
+                theStateManager.IsCollectingStar = false;
+            }
         }
         
         if (finalTile == null)
@@ -71,9 +91,34 @@ public class Player : MonoBehaviour
         }
 
         //teleporteer player naar finalTile
+        if (theStateManager.IsCollectingStar == false)
+        {
+            this.transform.position = finalTile.transform.position;
+            currentTile = finalTile;
 
-        this.transform.position = finalTile.transform.position;
-        currentTile = finalTile;
-        theStateManager.IsDoneClicking = true;
+            switch (currentTile.tileTypeID)
+            {
+                //Nothing
+                case 0:
+                    Debug.Log("You have this amount of coins: " + amountOfCoins);
+                    break;
+                //+3 coins
+                case 1:
+                    amountOfCoins += 3;
+                    Debug.Log("You have this amount of coins: " + amountOfCoins);
+                    break;
+                //-3 coins
+                case 2:
+                    amountOfCoins -= 3;
+                    if (amountOfCoins < 0)
+                    {
+                        amountOfCoins = 0;
+                    }
+                    Debug.Log("You have this amount of coins: " + amountOfCoins);
+                    break;
+            }
+
+            theStateManager.IsDoneClicking = true;
+        }
     }
 }

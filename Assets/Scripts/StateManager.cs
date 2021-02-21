@@ -15,6 +15,7 @@ public class StateManager : MonoBehaviour
 
     public bool IsDoneRolling = false;
     public bool IsDoneClicking = false;
+    public bool IsCollectingStar = false;
 
     public void NewTurn()
     {
