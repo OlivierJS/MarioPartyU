@@ -157,3 +157,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingTile: {fileID: 0}
   playerID: 0
+  amountOfCoins: 30
+  amountOfStars: 0

@@ -46,7 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebb02c633a4dce646a9113e977009254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextTiles: []
+  TileTexture:
+  - {fileID: 2800000, guid: 090a96644f4c06f4aa1e36a8448d85f5, type: 3}
+  PlayerList:
+  - {fileID: 0}
+  - {fileID: 0}
+  NextTiles:
+  - {fileID: 0}
   tileTypeID: 0
 --- !u!33 &5753403495717002847
 MeshFilter:

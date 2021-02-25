@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -121,6 +121,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &68289138 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2665072634698913824, guid: bcd65d2fde794cc49be0c8e82e9e8be8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1647665287}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55b2ab1fe77046d449a25b568d321e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &85119226 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8967336014910249913, guid: 6412450c1a7f3b74799e71b19557d47e,
@@ -574,6 +586,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 15, y: 90, z: 0}
+--- !u!114 &329384606 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8917627951641617542, guid: fa2c811746e8f124b9e437db21ca486c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8917627951440140363}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55b2ab1fe77046d449a25b568d321e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &528258165
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -583,19 +607,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
         type: 3}
-      propertyPath: tileTypeID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
-        type: 3}
-      propertyPath: NextTiles.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
-        type: 3}
       propertyPath: NextTiles.Array.data[0]
       value: 
       objectReference: {fileID: 1258759226}
+    - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
+        type: 3}
+      propertyPath: PlayerList.Array.data[0]
+      value: 
+      objectReference: {fileID: 329384606}
+    - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
+        type: 3}
+      propertyPath: PlayerList.Array.data[1]
+      value: 
+      objectReference: {fileID: 68289138}
     - target: {fileID: 8967336014910249913, guid: 6412450c1a7f3b74799e71b19557d47e,
         type: 3}
       propertyPath: m_RootOrder
@@ -1450,34 +1474,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
         type: 3}
-      propertyPath: tileTypeID
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
-        type: 3}
-      propertyPath: NextTiles.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
-        type: 3}
       propertyPath: NextTiles.Array.data[0]
       value: 
       objectReference: {fileID: 1549476753}
-    - target: {fileID: 7929209489066768465, guid: 6412450c1a7f3b74799e71b19557d47e,
+    - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
         type: 3}
-      propertyPath: NextTiles.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7929209489066768465, guid: 6412450c1a7f3b74799e71b19557d47e,
-        type: 3}
-      propertyPath: NextTiles.Array.data[0]
+      propertyPath: PlayerList.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8967336014822725576, guid: 6412450c1a7f3b74799e71b19557d47e,
+      objectReference: {fileID: 329384606}
+    - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: PlayerList.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: a1831a4d25334174a9d538c5b09a8fcc, type: 2}
+      objectReference: {fileID: 68289138}
     - target: {fileID: 8967336014910249913, guid: 6412450c1a7f3b74799e71b19557d47e,
         type: 3}
       propertyPath: m_RootOrder
@@ -1824,6 +1833,11 @@ PrefabInstance:
       propertyPath: StartingTile
       value: 
       objectReference: {fileID: 908320465}
+    - target: {fileID: 2665072634698913824, guid: bcd65d2fde794cc49be0c8e82e9e8be8,
+        type: 3}
+      propertyPath: amountOfCoins
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6931624184464385429, guid: bcd65d2fde794cc49be0c8e82e9e8be8,
         type: 3}
       propertyPath: m_Name
@@ -2211,7 +2225,7 @@ PrefabInstance:
     - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
         type: 3}
       propertyPath: tileTypeID
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
         type: 3}
@@ -2564,7 +2578,7 @@ PrefabInstance:
     - target: {fileID: 8917627951641617542, guid: fa2c811746e8f124b9e437db21ca486c,
         type: 3}
       propertyPath: amountOfCoins
-      value: 99
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8917627951641617543, guid: fa2c811746e8f124b9e437db21ca486c,
         type: 3}

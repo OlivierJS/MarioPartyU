@@ -9,22 +9,24 @@ public class Player : MonoBehaviour
     void Start()
     {
         DiceRoller = GameObject.FindObjectOfType<DiceRoll>();
-        theStateManager = GameObject.FindObjectOfType<StateManager>();
+        theStateManager = GameObject.FindObjectOfType<StateManager>();      
     }
 
     public Tile StartingTile;
     Tile currentTile;
+    
 
     public int playerID;
 
     public int amountOfCoins = 0;
     public int amountOfStars = 0;
+    
 
     StateManager theStateManager;
     // Update is called once per frame
     void Update()
     {
-       
+       Debug.Log("Player:" + playerID + ", " + amountOfCoins);
     }
 
     void OnMouseUp()
@@ -38,8 +40,18 @@ public class Player : MonoBehaviour
             return;
         }
 
-        int spacesToMove = DiceRoller.DiceValue;
-        Tile finalTile = currentTile;
+        PlayerMovement();
+        if (theStateManager.IsCollectingStar == false)
+        {
+            //hier is StartingTile gebruikt omdat de functie importeren van tile.cs niet lukte
+            StartingTile.TileEffects(currentTile, amountOfCoins);
+        }
+    }
+
+    public void PlayerMovement()
+    {
+         int spacesToMove = DiceRoller.DiceValue;
+         Tile finalTile = currentTile;
 
         for (int i = 0; i < spacesToMove; i++)
         {
@@ -49,12 +61,6 @@ public class Player : MonoBehaviour
             }
             else
             {
-                /*if (finalTile.NextTiles == null || finalTile.NextTiles.Length == 0)
-                {
-                    Debug.Log("Good job!");
-                    Destroy(gameObject);
-                }
-                else */
                 if (finalTile.NextTiles.Length > 0)
                 {
                     //keuze van speler moet nog geïmplementeerd worden
@@ -64,25 +70,9 @@ public class Player : MonoBehaviour
                 {
                     finalTile = finalTile.NextTiles[0];
                 }
-                Debug.Log(finalTile.transform.position);
-               
+                Debug.Log(finalTile.transform.position); 
             }
-
-            if (finalTile.tileTypeID == 3)
-            {
-                theStateManager.IsCollectingStar = true;
-                this.transform.position = finalTile.transform.position;
-                if (amountOfCoins > 10)
-                {
-                    amountOfStars += 1;
-                    Debug.Log("Your Got A Star! Amount of Stars: " + amountOfStars);
-                }
-                else
-                {
-                    Debug.Log("Not Enough Coins! Amount of Stars: " + amountOfStars);
-                }
-                theStateManager.IsCollectingStar = false;
-            }
+            StarCollection(finalTile);
         }
         
         if (finalTile == null)
@@ -90,23 +80,52 @@ public class Player : MonoBehaviour
             return;
         }
 
-        //teleporteer player naar finalTile
+        //teleporteer player naar finalTile, tenzij hij bezig is met star collection
         if (theStateManager.IsCollectingStar == false)
         {
             this.transform.position = finalTile.transform.position;
             currentTile = finalTile;
+            
 
-            switch (currentTile.tileTypeID)
+            theStateManager.IsDoneClicking = true;
+        }
+    }
+
+    void StarCollection(Tile tile)
+    {
+            if (tile.tileTypeID == 3)
+            {
+                theStateManager.IsCollectingStar = true;
+                this.transform.position = tile.transform.position;
+                //Coins moeten er nog afgehaald worden bij star collection, voor testen weggelaten
+                if (amountOfCoins > 10)
+                {
+                    amountOfStars += 1;
+                    //amountOfCoins -= 10;
+                    Debug.Log("You Got A Star! Amount of Stars: " + amountOfStars);
+                }
+                else
+                {
+                    Debug.Log("Not Enough Coins! Amount of Stars: " + amountOfStars);
+                }
+                theStateManager.IsCollectingStar = false;
+            }
+    }
+
+    //misschien deze functie in de Tile script zetten om deze overzichtelijk te houden
+    /*void TileEffects(Tile tile)
+    {
+            switch (tile.tileTypeID)
             {
                 //Nothing
                 case 0:
                     Debug.Log("You have this amount of coins: " + amountOfCoins);
-                    break;
+                break;
                 //+3 coins
                 case 1:
                     amountOfCoins += 3;
                     Debug.Log("You have this amount of coins: " + amountOfCoins);
-                    break;
+                break;
                 //-3 coins
                 case 2:
                     amountOfCoins -= 3;
@@ -115,10 +134,8 @@ public class Player : MonoBehaviour
                         amountOfCoins = 0;
                     }
                     Debug.Log("You have this amount of coins: " + amountOfCoins);
-                    break;
+                break;
             }
+    }*/
 
-            theStateManager.IsDoneClicking = true;
-        }
-    }
 }

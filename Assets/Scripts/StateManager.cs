@@ -12,6 +12,7 @@ public class StateManager : MonoBehaviour
 
     public int numberOfPlayer = 2;
     public int currentPlayerID = 0;
+    
 
     public bool IsDoneRolling = false;
     public bool IsDoneClicking = false;
