@@ -31,12 +31,12 @@ public class Player : MonoBehaviour
 
     void OnMouseUp()
     {
-        Debug.Log("HI");
+        //Debug.Log("HI");
         
         if (theStateManager.IsDoneRolling == false || theStateManager.IsDoneClicking == true || theStateManager.currentPlayerID != playerID)
         {
             //je kan nog niet bewegen (nog geen roll of al geklikt)
-            Debug.Log(playerID);
+            //Debug.Log(playerID);
             return;
         }
 
@@ -44,7 +44,12 @@ public class Player : MonoBehaviour
         if (theStateManager.IsCollectingStar == false)
         {
             //hier is StartingTile gebruikt omdat de functie importeren van tile.cs niet lukte
-            StartingTile.TileEffects(currentTile, amountOfCoins);
+            if (currentTile != null)
+            {
+                currentTile.TileEffects(currentTile, this);
+            }
+
+            
         }
     }
 
@@ -70,7 +75,6 @@ public class Player : MonoBehaviour
                 {
                     finalTile = finalTile.NextTiles[0];
                 }
-                Debug.Log(finalTile.transform.position); 
             }
             StarCollection(finalTile);
         }
@@ -101,12 +105,12 @@ public class Player : MonoBehaviour
                 if (amountOfCoins > 10)
                 {
                     amountOfStars += 1;
-                    //amountOfCoins -= 10;
-                    Debug.Log("You Got A Star! Amount of Stars: " + amountOfStars);
+                    amountOfCoins -= 10;
+                    //Debug.Log("Your Got A Star! Amount of Stars: " + amountOfStars);
                 }
                 else
                 {
-                    Debug.Log("Not Enough Coins! Amount of Stars: " + amountOfStars);
+                    //Debug.Log("Not Enough Coins! Amount of Stars: " + amountOfStars);
                 }
                 theStateManager.IsCollectingStar = false;
             }

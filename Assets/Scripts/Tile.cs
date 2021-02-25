@@ -52,27 +52,27 @@ public class Tile : MonoBehaviour
         public Tile[] NextTiles;
         public int tileTypeID;
 
-        public void TileEffects(Tile tile,int coins)
+        public void TileEffects(Tile tile, Player player)
         {
                 switch (tile.tileTypeID)
                 {
                     //Nothing
                     case 0:
-                        Debug.Log("You have this amount of coins: " + coins);
+                        
                     break;
                     //+3 coins
                     case 1:
-                        coins += 3;
-                        Debug.Log("You have this amount of coins: " + coins);
+                        player.amountOfCoins += 3;
+                        
                     break;
                     //-3 coins
                     case 2:
-                        coins -= 3;
-                        if (coins < 0)
+                        player.amountOfCoins -= 3;
+                        if (player.amountOfCoins < 0)
                         {
-                            coins = 0;
+                            player.amountOfCoins = 0;
                         }
-                        Debug.Log("You have this amount of coins: " + coins);
+                        
                     break;
                     //Lucky space: random keuze tussen +5 coins aan iemand, -5 coins, een item, of coins wisselen met andere speler
                     case 4:
@@ -96,8 +96,7 @@ public class Tile : MonoBehaviour
 
         public void LuckySpace(int Player_ID1, int player_ID2)
         {
-            //int effect = UnityEngine.Random.Range(1, 3);
-            int effect = 4;
+            int effect = UnityEngine.Random.Range(1, 5);
             player = PlayerList[Player_ID1];
             player2 = PlayerList[player_ID2];
             
