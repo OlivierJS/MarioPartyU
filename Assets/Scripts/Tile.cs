@@ -11,7 +11,7 @@ public class Tile : MonoBehaviour
     StateManager theStateManager;
     public Player[] PlayerList;
     Player player;
-    Player player2;
+    Player otherplayer;
 
 
     void tileTypeSetup()
@@ -68,15 +68,11 @@ public class Tile : MonoBehaviour
                     //-3 coins
                     case 2:
                         player.amountOfCoins -= 3;
-                        if (player.amountOfCoins < 0)
-                        {
-                            player.amountOfCoins = 0;
-                        }
                         
                     break;
-                    //Lucky space: random keuze tussen +5 coins aan iemand, -5 coins, een item, of coins wisselen met andere speler
+                    //Lucky space: random keuze tussen +3-5 coins aan iemand, -3-5 coins, een item, of coins wisselen met andere speler
                     case 4:
-                        int[] temp_list = new int[theStateManager.numberOfPlayer];
+                        /*int[] temp_list = new int[theStateManager.numberOfPlayer];
                         for (int i = 0; i < theStateManager.numberOfPlayer; i++)
                         {
                             temp_list[i] = i;
@@ -86,19 +82,19 @@ public class Tile : MonoBehaviour
                         int p1 = temp_list[a];
                         RemoveAt(ref temp_list, a);
                         int b = UnityEngine.Random.Range(0, temp_list.Length);
-                        int p2 = temp_list[b];
+                        int p2 = temp_list[b];*/
 
-                        LuckySpace(p1, p2);
+                        LuckySpace();
                         
                     break;
                 }
         }
 
-        public void LuckySpace(int Player_ID1, int player_ID2)
+        public void LuckySpace()
         {
             int effect = UnityEngine.Random.Range(1, 5);
-            player = PlayerList[Player_ID1];
-            player2 = PlayerList[player_ID2];
+            player = PlayerList[theStateManager.currentPlayerID];
+            otherplayer = PlayerList[(theStateManager.currentPlayerID + 1) % theStateManager.numberOfPlayer];
             
 ;           switch (effect)
             {
@@ -106,7 +102,7 @@ public class Tile : MonoBehaviour
                     player.amountOfCoins += UnityEngine.Random.Range(3, 6);
                 break;
                 case 2:
-                    player.amountOfCoins -= UnityEngine.Random.Range(3, 6);
+                    otherplayer.amountOfCoins -= UnityEngine.Random.Range(3, 6);
                 break;
                 case 3:
                     GetItem();
@@ -115,9 +111,9 @@ public class Tile : MonoBehaviour
                     int temp_coin;
                     int temp_coin2;
                     temp_coin = player.amountOfCoins;
-                    temp_coin2 = player2.amountOfCoins;
+                    temp_coin2 = otherplayer.amountOfCoins;
                     player.amountOfCoins = temp_coin2; 
-                    player2.amountOfCoins = temp_coin;
+                    otherplayer.amountOfCoins = temp_coin;
                 break;
             }
         }
@@ -131,12 +127,12 @@ public class Tile : MonoBehaviour
         {
         
         }
-        public static void RemoveAt<T>(ref T[] arr, int index)
+       /* public static void RemoveAt<T>(ref T[] arr, int index)
         {
             // replace the element at index with the last element
             arr[index] = arr[arr.Length - 1];
             // finally, let's decrement Array's size by one
             Array.Resize(ref arr, arr.Length - 1);       
         }
-                       
+       */                
 }
