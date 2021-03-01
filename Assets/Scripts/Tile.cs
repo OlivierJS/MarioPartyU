@@ -9,7 +9,6 @@ public class Tile : MonoBehaviour
     Renderer m_Renderer;
     public Texture2D[] TileTexture;
     StateManager theStateManager;
-    public Player[] PlayerList;
     Player player;
     Player otherplayer;
 
@@ -93,8 +92,8 @@ public class Tile : MonoBehaviour
         public void LuckySpace()
         {
             int effect = UnityEngine.Random.Range(1, 5);
-            player = PlayerList[theStateManager.currentPlayerID];
-            otherplayer = PlayerList[(theStateManager.currentPlayerID + 1) % theStateManager.numberOfPlayer];
+            player = theStateManager.PlayersList[theStateManager.currentPlayerID];
+            otherplayer = theStateManager.PlayersList[(theStateManager.currentPlayerID + 1) % theStateManager.numberOfPlayer];
             
 ;           switch (effect)
             {

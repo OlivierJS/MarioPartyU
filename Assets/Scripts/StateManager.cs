@@ -9,6 +9,7 @@ public class StateManager : MonoBehaviour
     {
         //Verander alleen van 1 voor testing. Voor een normale game zou deze variable aan het begin altijd gelijk moeten zijn aan 1.
         currentTurn = 1;
+        canMove = true;
     }
 
     public int currentTurn;
@@ -20,12 +21,18 @@ public class StateManager : MonoBehaviour
     public bool IsDoneRolling = false;
     public bool IsDoneClicking = false;
     public bool IsCollectingStar = false;
+    public bool IsDoneCollecting = false;
     public bool gameFinished = false;
+    public bool canMove = true;
+
+    public Player[] PlayersList;
 
     public void NewTurn()
     {
         IsDoneRolling = false;
         IsDoneClicking = false;
+        IsDoneCollecting = false;
+        canMove = true;
 
         currentTurn += 1;
 
