@@ -96,7 +96,7 @@ public class Tile : MonoBehaviour
 
         public void LuckySpace(int Player_ID1, int player_ID2)
         {
-            int effect = UnityEngine.Random.Range(1, 5);
+            int effect = 3; //UnityEngine.Random.Range(1, 5);
             player = PlayerList[Player_ID1];
             player2 = PlayerList[player_ID2];
             
@@ -109,6 +109,7 @@ public class Tile : MonoBehaviour
                     player.amountOfCoins -= UnityEngine.Random.Range(3, 6);
                 break;
                 case 3:
+                    Debug.Log(player);
                     GetItem();
                 break;
                 case 4:
@@ -124,7 +125,16 @@ public class Tile : MonoBehaviour
 
         public void GetItem()
         {
-            Debug.Log("You got an item!");
+            for (int i = 0; i < player.itemsInventory.Length; i++)
+            {
+                if (player.itemsInventory[i] == 0)
+                {
+                    player.itemsInventory[i] = UnityEngine.Random.Range(1, 5);
+                    Debug.Log("You got an item!");
+                    break;
+                }
+            }
+            Debug.Log("Inventory Full!");
         }
         // Update is called once per frame
         void Update()

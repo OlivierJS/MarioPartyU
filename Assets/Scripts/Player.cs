@@ -14,19 +14,19 @@ public class Player : MonoBehaviour
 
     public Tile StartingTile;
     Tile currentTile;
-    
 
     public int playerID;
 
     public int amountOfCoins = 0;
     public int amountOfStars = 0;
+    public int[] itemsInventory = { 0, 0, 0 };
     
 
     StateManager theStateManager;
     // Update is called once per frame
     void Update()
     {
-       Debug.Log("Player:" + playerID + ", " + amountOfCoins);
+       //Debug.Log("Player:" + playerID + ", " + amountOfCoins);
     }
 
     void OnMouseUp()

@@ -17,6 +17,7 @@ public class StateManager : MonoBehaviour
 
     public int maxTurns = 10;
 
+    public bool isDoneUsingItem = false;
     public bool IsDoneRolling = false;
     public bool IsDoneClicking = false;
     public bool IsCollectingStar = false;
@@ -24,6 +25,7 @@ public class StateManager : MonoBehaviour
 
     public void NewTurn()
     {
+        isDoneUsingItem = false;
         IsDoneRolling = false;
         IsDoneClicking = false;
 
@@ -35,7 +37,7 @@ public class StateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsDoneRolling == true && IsDoneClicking == true)
+        if (IsDoneRolling == true && IsDoneClicking == true && isDoneUsingItem == false)
         {
             if (currentTurn < maxTurns)
             {
