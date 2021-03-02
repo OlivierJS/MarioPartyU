@@ -53,7 +53,7 @@ MonoBehaviour:
   - {fileID: 0}
   NextTiles:
   - {fileID: 0}
-  tileTypeID: 0
+  tileTypeID: 4
 --- !u!33 &5753403495717002847
 MeshFilter:
   m_ObjectHideFlags: 0
