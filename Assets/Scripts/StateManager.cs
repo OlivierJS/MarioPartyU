@@ -23,6 +23,8 @@ public class StateManager : MonoBehaviour
     public bool IsDoneClicking = false;
     public bool IsCollectingStar = false;
     public bool IsDoneCollecting = false;
+    public bool IsCurrentlyShopping = false;
+    public bool IsDoneShopping = false;
     public bool gameFinished = false;
     public bool canMove = true;
 
@@ -34,6 +36,7 @@ public class StateManager : MonoBehaviour
         IsDoneRolling = false;
         IsDoneClicking = false;
         IsDoneCollecting = false;
+        IsDoneShopping = false;
         canMove = true;
 
         currentTurn += 1;

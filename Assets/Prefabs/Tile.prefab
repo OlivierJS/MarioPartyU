@@ -48,9 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileTexture:
   - {fileID: 2800000, guid: 090a96644f4c06f4aa1e36a8448d85f5, type: 3}
-  PlayerList:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2800000, guid: 1419196ff87da604193f680263e4f233, type: 3}
   NextTiles:
   - {fileID: 0}
   tileTypeID: 4
