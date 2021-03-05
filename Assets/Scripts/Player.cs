@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     }
 
     public Tile StartingTile;
-    Tile currentTile;
+    public Tile currentTile;
 
     public int playerID;
 

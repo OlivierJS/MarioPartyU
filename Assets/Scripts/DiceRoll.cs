@@ -11,6 +11,7 @@ public class DiceRoll : MonoBehaviour
     {
         m_Renderer = GetComponent<Renderer>();
         theStateManager = GameObject.FindObjectOfType<StateManager>();
+        maxDiceValue = 6;
     }
 
     // Update is called once per frame
@@ -20,10 +21,9 @@ public class DiceRoll : MonoBehaviour
     }
 
     StateManager theStateManager;
-
     public int DiceValue;
-
     public Texture2D[] DiceTexture;
+    public int maxDiceValue;
 
     public void RollDice()
     {
@@ -33,7 +33,7 @@ public class DiceRoll : MonoBehaviour
             return;
         }
 
-        DiceValue = Random.Range(1, 7);
+        DiceValue = Random.Range(1, maxDiceValue + 1);
         //DiceValue = 2;
         //Debug.Log("You rolled: " + DiceValue);
         // met een animatie zouden we eerst moeten wachten op het einde van de animatie
