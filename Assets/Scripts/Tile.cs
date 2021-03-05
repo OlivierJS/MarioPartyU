@@ -21,22 +21,26 @@ public class Tile : MonoBehaviour
             //Normal Tile
             case 0:
                 myMaterial.color = Color.green;
-            break;
+                break;
             //+3 coins Tile
             case 1:
                 myMaterial.color = Color.blue;
-            break;
+                break;
             //-3 coins Tile
             case 2:
                 myMaterial.color = Color.red;
-            break;
+                break;
             //Star Tile
             case 3:
                 myMaterial.color = Color.yellow;
-            break;
+                break;
+            //Lucky Tile
             case 4: 
                 m_Renderer.material.SetTexture("_MainTex", TileTexture[0]);
-            break;
+                break;
+            case 5:
+                m_Renderer.material.SetTexture("_MainTex", TileTexture[1]);
+                break;
         }
     }
 
@@ -54,7 +58,7 @@ public class Tile : MonoBehaviour
 
         public void TileEffects(Tile tile, Player player)
         {
-                switch (tile.tileTypeID)
+            switch (tile.tileTypeID)
                 {
                     //Nothing
                     case 0:
@@ -102,6 +106,7 @@ public class Tile : MonoBehaviour
                     player.amountOfCoins += UnityEngine.Random.Range(3, 6);
                 break;
                 case 2:
+                    //TO DO: Gives players negative coins. Fix that
                     otherplayer.amountOfCoins -= UnityEngine.Random.Range(3, 6);
                 break;
                 case 3:

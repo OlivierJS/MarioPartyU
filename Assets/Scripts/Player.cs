@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     DiceRoll DiceRoller;
     public GameObject StarMenu;
     public GameObject ItemMenu;
+    public GameObject ShopMenu;
 
 
     // Update is called once per frame
@@ -49,7 +50,7 @@ public class Player : MonoBehaviour
                     return;
                 }
 
-                if (theStateManager.IsCollectingStar == false)
+                if (theStateManager.IsCollectingStar == false && theStateManager.IsCurrentlyShopping == false)
                 {
                     PlayerMovement();
                     //hier is currentTile gebruikt omdat de functie importeren van tile.cs niet lukte
@@ -59,7 +60,7 @@ public class Player : MonoBehaviour
                     }
                 }
 
-                if (theStateManager.IsCollectingStar == true)
+                if (theStateManager.IsCollectingStar == true || theStateManager.IsCurrentlyShopping == true)
                 {
                     return;
                 }
@@ -103,6 +104,19 @@ public class Player : MonoBehaviour
                 Debug.Log("You landed on a star tile!");
                 break;
             }
+            if (finalTile.tileTypeID == 5 && theStateManager.IsDoneShopping == false)
+            {
+                if (itemsInventory[0] == 0 || itemsInventory[1] == 0 || itemsInventory[2] == 0)
+                {
+                    Shopping(finalTile);
+                    Debug.Log("You landed on a shopping tile!");
+                    break;
+                }
+                else 
+                {
+                    DiceRoller.DiceValue += 1;
+                }
+            }
         }
         
         if (finalTile == null)
@@ -111,7 +125,7 @@ public class Player : MonoBehaviour
         }
 
         //teleporteer player naar finalTile, tenzij hij bezig is met star collection
-        if (finalTile.tileTypeID != 3)
+        if (finalTile.tileTypeID != 3 && finalTile.tileTypeID != 5)
         {
             this.transform.position = finalTile.transform.position;
             currentTile = finalTile;
@@ -122,7 +136,9 @@ public class Player : MonoBehaviour
 
     public void CanMove()
     {
+        Debug.Log("Can now move");
         theStateManager.canMove = true;
+        ShopMenu.SetActive(false);
         StarMenu.SetActive(false);
     }
 
@@ -150,6 +166,21 @@ public class Player : MonoBehaviour
                 theStateManager.IsDoneCollecting = true;
                 DiceRoller.DiceValue += 1;
                 
+            }
+    }
+
+    void Shopping(Tile tile)
+    {
+            if (tile.tileTypeID == 5)
+            {
+                theStateManager.IsCurrentlyShopping = true;
+                this.transform.position = tile.transform.position;
+                ShopMenu.SetActive(true);
+                theStateManager.canMove = false;
+                theStateManager.IsCurrentlyShopping = false;
+                theStateManager.IsDoneClicking = false;
+                theStateManager.IsDoneShopping = true;
+                DiceRoller.DiceValue += 1;
             }
     }
 }

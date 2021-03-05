@@ -51,6 +51,6 @@ public class ItemButton3 : MonoBehaviour
     public void UseItem()
     {
         //TO DO: Add item functionality (could be done using a switch statement)
-        currentPlayer.itemsInventory[1] = 0;
+        currentPlayer.itemsInventory[2] = 0;
     }
 }
