@@ -7,6 +7,7 @@ public class ItemButton3 : MonoBehaviour
 {
     public Player currentPlayer;
     StateManager theStateManager;
+    public GameObject ItemMenu;
 
     public Sprite ItemImageDoubleDice;
     public Sprite ItemImageTripleDice;
@@ -51,6 +52,53 @@ public class ItemButton3 : MonoBehaviour
     public void UseItem()
     {
         //TO DO: Add item functionality (could be done using a switch statement)
+        switch (currentPlayer.itemsInventory[2])
+        {
+            case 0:
+                theStateManager.amountOfDice = 1;
+            break;
+            case 1:
+                // 2 keer dobbelen (2 dice laten verschijnen?)
+                theStateManager.amountOfDice = 2;
+            break;
+            case 2:
+                //3 keer dobbelen (3 dice laten verschijnen?)
+                theStateManager.amountOfDice = 3;
+            break;
+            case 3:
+                // je kan alleen 1-3 krijgen
+                for (int i = 0; i < theStateManager.DiceRollers.Length; i++)
+                {
+                    theStateManager.DiceRollers[i].maxDiceValue = 3;
+                }
+                theStateManager.amountOfDice = 1;
+            break;
+            case 4:
+                //teleporteer naar plek vlak voor star tile
+                currentPlayer.currentTile = currentPlayer.StartingTile;
+                for(int i = 0; i < 10000; i++)
+                {
+                    currentPlayer.currentTile = currentPlayer.currentTile.NextTiles[0];
+                    if (currentPlayer.currentTile.tileTypeID == 3)
+                    {
+                        currentPlayer.currentTile = currentPlayer.currentTile.PrevTile;
+                        currentPlayer.transform.position = currentPlayer.currentTile.transform.position;
+                        break;
+                    }
+                }
+                theStateManager.amountOfDice = 1;
+            break;
+        }
         currentPlayer.itemsInventory[2] = 0;
+    }
+
+    public void FinishItem()
+    {
+        theStateManager.isDoneUsingItem = true;
+        ItemMenu.SetActive(false);
+        for (int i = 0; i < theStateManager.DiceRollers.Length; i++)
+        {
+            theStateManager.DiceRollers[i].stopRandom = false;
+        }
     }
 }

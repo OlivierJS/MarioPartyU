@@ -7,7 +7,7 @@ public class ItemButton1 : MonoBehaviour
 {
     public Player currentPlayer;
     StateManager theStateManager;
-    DiceRoll DiceRoller;
+    public GameObject ItemMenu;
 
     public Sprite ItemImageDoubleDice;
     public Sprite ItemImageTripleDice;
@@ -19,7 +19,6 @@ public class ItemButton1 : MonoBehaviour
     void Start()
     {
         theStateManager = GameObject.FindObjectOfType<StateManager>();
-        DiceRoller = GameObject.FindObjectOfType<DiceRoll>();
     }
 
     // Update is called once per frame
@@ -56,18 +55,23 @@ public class ItemButton1 : MonoBehaviour
         switch (currentPlayer.itemsInventory[0])
         {
             case 0:
-                return;
+                theStateManager.amountOfDice = 1;
             break;
             case 1:
                 // 2 keer dobbelen (2 dice laten verschijnen?)
+                theStateManager.amountOfDice = 2;
             break;
             case 2:
                 //3 keer dobbelen (3 dice laten verschijnen?)
-
+                theStateManager.amountOfDice = 3;
             break;
             case 3:
                 // je kan alleen 1-3 krijgen
-                DiceRoller.maxDiceValue = 3;
+                for (int i = 0; i < theStateManager.DiceRollers.Length; i++)
+                {
+                    theStateManager.DiceRollers[i].maxDiceValue = 3;
+                }
+                theStateManager.amountOfDice = 1;
             break;
             case 4:
                 //teleporteer naar plek vlak voor star tile
@@ -82,8 +86,19 @@ public class ItemButton1 : MonoBehaviour
                         break;
                     }
                 }
+                theStateManager.amountOfDice = 1;
             break;
         }
         currentPlayer.itemsInventory[0] = 0;
+    }
+
+    public void FinishItem()
+    {
+        theStateManager.isDoneUsingItem = true;
+        ItemMenu.SetActive(false);
+        for (int i = 0; i < theStateManager.DiceRollers.Length; i++)
+        {
+            theStateManager.DiceRollers[i].stopRandom = false;
+        }
     }
 }
