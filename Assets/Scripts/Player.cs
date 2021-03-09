@@ -10,10 +10,29 @@ public class Player : MonoBehaviour
     {
         DiceRoller = GameObject.FindObjectOfType<DiceRoll>();
         theStateManager = GameObject.FindObjectOfType<StateManager>();
+        theGlobalDataManager = GameObject.FindObjectOfType<GlobalDataManager>();
+
+        switch (playerID)
+        {
+            case 0:
+                currentTile = theGlobalDataManager.P1currentTile;
+                amountOfCoins = theGlobalDataManager.P1amountOfCoins;
+                amountOfStars = theGlobalDataManager.P1amountOfStars;
+                itemsInventory = theGlobalDataManager.P1itemsInventory;
+                break;
+            case 1:
+                currentTile = theGlobalDataManager.P2currentTile;
+                amountOfCoins = theGlobalDataManager.P2amountOfCoins;
+                amountOfStars = theGlobalDataManager.P2amountOfStars;
+                itemsInventory = theGlobalDataManager.P2itemsInventory;
+                break;
+        }
+
+        this.transform.position = currentTile.transform.position;
     }
 
     public Tile StartingTile;
-    Tile currentTile;
+    public Tile currentTile;
 
     public int playerID;
 
@@ -23,6 +42,7 @@ public class Player : MonoBehaviour
 
     StateManager theStateManager;
     DiceRoll DiceRoller;
+    GlobalDataManager theGlobalDataManager;
     public GameObject StarMenu;
     public GameObject ItemMenu;
     public GameObject ShopMenu;
@@ -70,6 +90,8 @@ public class Player : MonoBehaviour
                     amountOfCoins = 0;
                 }
             }
+
+            SavePlayer();
         }
 
 
@@ -182,5 +204,24 @@ public class Player : MonoBehaviour
                 theStateManager.IsDoneShopping = true;
                 DiceRoller.DiceValue += 1;
             }
+    }
+
+    public void SavePlayer()
+    {
+        switch(playerID)
+        {
+            case 0:
+                theGlobalDataManager.P1currentTile = currentTile;
+                theGlobalDataManager.P1amountOfCoins = amountOfCoins;
+                theGlobalDataManager.P1amountOfStars = amountOfStars;
+                theGlobalDataManager.P1itemsInventory = itemsInventory;
+                break;
+            case 1:
+                theGlobalDataManager.P2currentTile = currentTile;
+                theGlobalDataManager.P2amountOfCoins = amountOfCoins;
+                theGlobalDataManager.P2amountOfStars = amountOfStars;
+                theGlobalDataManager.P2itemsInventory = itemsInventory;
+                break;
+        }
     }
 }
