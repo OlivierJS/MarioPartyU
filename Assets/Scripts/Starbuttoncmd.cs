@@ -12,6 +12,8 @@ public class Starbuttoncmd : MonoBehaviour
 
     Player player;
     StateManager theStateManager;
+    public GameObject ShopMenu;
+    public GameObject StarMenu;
 
     public void ChooseToCollect()
     {
@@ -28,5 +30,4 @@ public class Starbuttoncmd : MonoBehaviour
                 Debug.Log("Not Enough Coins! Amount of Stars: " + player.amountOfStars);
           }
     }
-
 }

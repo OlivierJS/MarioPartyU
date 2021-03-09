@@ -53,6 +53,7 @@ public class Tile : MonoBehaviour
         }
 
         public Tile[] NextTiles;
+        public Tile PrevTile;
         public int tileTypeID;
 
         public void TileEffects(Tile tile, Player player)

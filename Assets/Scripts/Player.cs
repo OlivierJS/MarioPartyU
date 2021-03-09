@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DiceRoller = GameObject.FindObjectOfType<DiceRoll>();
         theStateManager = GameObject.FindObjectOfType<StateManager>();
         theGlobalDataManager = GameObject.FindObjectOfType<GlobalDataManager>();
 
@@ -39,9 +38,12 @@ public class Player : MonoBehaviour
     public int amountOfCoins = 0;
     public int amountOfStars = 0;
     public int[] itemsInventory = { 0, 0, 0 };
+    public int DiceTotal;
+    int value1;
+    int value2;
+    int value3;
 
     StateManager theStateManager;
-    DiceRoll DiceRoller;
     GlobalDataManager theGlobalDataManager;
     public GameObject StarMenu;
     public GameObject ItemMenu;
@@ -50,7 +52,7 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
         if (theStateManager.isDoneUsingItem == false)
         {
             ItemUsage();
@@ -58,37 +60,39 @@ public class Player : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space) && theStateManager.isDoneUsingItem == true)
         {
             //Debug.Log("Rolled");
-            DiceRoller.RollDice();
-
-            if (theStateManager.canMove == true)
+            if(theStateManager.IsDoneRolling == false)
             {
-                //Debug.Log("Can Move");
-                if (theStateManager.IsDoneRolling == false || theStateManager.IsDoneClicking == true || theStateManager.currentPlayerID != playerID)
+ 
+                for (int i = 0; i < theStateManager.DiceRollers.Length; i++)
                 {
-                    //je kan nog niet bewegen (nog geen roll of al geklikt)
-                    //Debug.Log(playerID);
-                    return;
+                    theStateManager.DiceRollers[i].RollDice();
                 }
+                value1 = theStateManager.DiceRollers[0].DiceValue;
+                value2 = theStateManager.DiceRollers[1].DiceValue;
+                value3 = theStateManager.DiceRollers[2].DiceValue;
 
-                if (theStateManager.IsCollectingStar == false && theStateManager.IsCurrentlyShopping == false)
+                //Debug.Log(AllDice[i].DiceValue);
+                switch(theStateManager.amountOfDice)
                 {
-                    PlayerMovement();
-                    //hier is currentTile gebruikt omdat de functie importeren van tile.cs niet lukte
-                    if (currentTile != null)
-                    {
-                        currentTile.TileEffects(currentTile, this);
-                    }
+                    case 1:
+                        theStateManager.PlayersList[theStateManager.currentPlayerID].DiceTotal += value1;
+                    break;
+                    case 2:
+                        theStateManager.PlayersList[theStateManager.currentPlayerID].DiceTotal = value1 +  value2;
+                    break;
+                    case 3:
+                        theStateManager.PlayersList[theStateManager.currentPlayerID].DiceTotal = value1 + value2 + value3;
+                    break;
                 }
+ 
+                theStateManager.IsDoneRolling = true;
+            }
 
-                if (theStateManager.IsCollectingStar == true || theStateManager.IsCurrentlyShopping == true)
-                {
-                    return;
-                }
+            MoveCheck();
 
-                if (amountOfCoins <= 0)
-                {
-                    amountOfCoins = 0;
-                }
+            if (amountOfCoins <= 0)
+            {
+                amountOfCoins = 0;
             }
 
             SavePlayer();
@@ -101,8 +105,8 @@ public class Player : MonoBehaviour
     public void PlayerMovement()
     {
         Tile finalTile = currentTile;
-
-        for (int i = 0; i < DiceRoller.DiceValue; i++)
+ 
+        for (int i = 0; i < theStateManager.PlayersList[theStateManager.currentPlayerID].DiceTotal; i++)
         {
             if (finalTile == null)
             {
@@ -136,7 +140,7 @@ public class Player : MonoBehaviour
                 }
                 else 
                 {
-                    DiceRoller.DiceValue += 1;
+                    DiceTotal += 1;
                 }
             }
         }
@@ -150,30 +154,52 @@ public class Player : MonoBehaviour
         if (finalTile.tileTypeID != 3 && finalTile.tileTypeID != 5)
         {
             this.transform.position = finalTile.transform.position;
+            //DiceTotal = 0;
             currentTile = finalTile;
+            if (currentTile != null)
+            {
+                currentTile.TileEffects(currentTile, this);
+            }
 
             theStateManager.IsDoneClicking = true;
         }
     }
 
-    public void CanMove()
+    void MoveCheck()
     {
-        Debug.Log("Can now move");
-        theStateManager.canMove = true;
-        ShopMenu.SetActive(false);
-        StarMenu.SetActive(false);
+            if (theStateManager.canMove == true)
+            {
+                //Debug.Log("Can Move");
+                if (theStateManager.IsDoneRolling == false || theStateManager.IsDoneClicking == true || theStateManager.currentPlayerID != playerID)
+                {
+                    //je kan nog niet bewegen (nog geen roll of al geklikt)
+                    //Debug.Log(playerID);
+                    return;
+                }
+
+                if (theStateManager.IsCollectingStar == false && theStateManager.IsCurrentlyShopping == false)
+                {
+                    PlayerMovement();
+                    
+                    //hier is currentTile gebruikt omdat de functie importeren van tile.cs niet lukte
+                    
+                }
+
+                if (theStateManager.IsCollectingStar == true || theStateManager.IsCurrentlyShopping == true)
+                {
+                    return;
+                }
+            }
     }
+
+
 
     void ItemUsage()
     {
         ItemMenu.SetActive(true);
     }
 
-    public void FinishItem()
-    {
-        theStateManager.isDoneUsingItem = true;
-        ItemMenu.SetActive(false);
-    }
+
 
     void StarCollection(Tile tile)
     {
@@ -186,8 +212,7 @@ public class Player : MonoBehaviour
                 theStateManager.IsCollectingStar = false;
                 theStateManager.IsDoneClicking = false;
                 theStateManager.IsDoneCollecting = true;
-                DiceRoller.DiceValue += 1;
-                
+                currentTile = currentTile.NextTiles[0];               
             }
     }
 
@@ -202,7 +227,7 @@ public class Player : MonoBehaviour
                 theStateManager.IsCurrentlyShopping = false;
                 theStateManager.IsDoneClicking = false;
                 theStateManager.IsDoneShopping = true;
-                DiceRoller.DiceValue += 1;
+                currentTile = currentTile.NextTiles[0];
             }
     }
 
