@@ -55,6 +55,7 @@ public class Tile : MonoBehaviour
         public Tile[] NextTiles;
         public Tile PrevTile;
         public int tileTypeID;
+        public int tileID;
 
         public void TileEffects(Tile tile, Player player)
         {
@@ -108,6 +109,10 @@ public class Tile : MonoBehaviour
                 case 2:
                     //TO DO: Gives players negative coins. Fix that
                     otherplayer.amountOfCoins -= UnityEngine.Random.Range(3, 6);
+                    if (otherplayer.amountOfCoins < 0)
+                    {
+                        otherplayer.amountOfCoins = 0;
+                    }
                 break;
                 case 3:
                     Debug.Log(player);

@@ -4,27 +4,38 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
+
     // Start is called before the first frame update
     void Start()
     {
         theStateManager = GameObject.FindObjectOfType<StateManager>();
         theGlobalDataManager = GameObject.FindObjectOfType<GlobalDataManager>();
+        allTiles = GameObject.FindObjectsOfType<Tile>();
 
         switch (playerID)
         {
             case 0:
-                currentTile = theGlobalDataManager.P1currentTile;
+                //currentTile = theGlobalDataManager.P1currentTile;
+                currentTileID = theGlobalDataManager.P1currentTileID;
                 amountOfCoins = theGlobalDataManager.P1amountOfCoins;
                 amountOfStars = theGlobalDataManager.P1amountOfStars;
                 itemsInventory = theGlobalDataManager.P1itemsInventory;
                 break;
             case 1:
-                currentTile = theGlobalDataManager.P2currentTile;
+                //currentTile = theGlobalDataManager.P2currentTile;
+                currentTileID = theGlobalDataManager.P2currentTileID;
                 amountOfCoins = theGlobalDataManager.P2amountOfCoins;
                 amountOfStars = theGlobalDataManager.P2amountOfStars;
                 itemsInventory = theGlobalDataManager.P2itemsInventory;
                 break;
+        }
+
+        for (int i = 0; i < allTiles.Length; i++)
+        {
+            if (currentTileID == allTiles[i].tileID)
+            {
+                currentTile = allTiles[i];
+            }
         }
 
         this.transform.position = currentTile.transform.position;
@@ -32,6 +43,8 @@ public class Player : MonoBehaviour
 
     public Tile StartingTile;
     public Tile currentTile;
+    Tile[] allTiles;
+    int currentTileID;
 
     public int playerID;
 
@@ -236,13 +249,15 @@ public class Player : MonoBehaviour
         switch(playerID)
         {
             case 0:
-                theGlobalDataManager.P1currentTile = currentTile;
+                //theGlobalDataManager.P1currentTile = currentTile;
+                theGlobalDataManager.P1currentTileID = currentTileID;
                 theGlobalDataManager.P1amountOfCoins = amountOfCoins;
                 theGlobalDataManager.P1amountOfStars = amountOfStars;
                 theGlobalDataManager.P1itemsInventory = itemsInventory;
                 break;
             case 1:
-                theGlobalDataManager.P2currentTile = currentTile;
+                //theGlobalDataManager.P2currentTile = currentTile;
+                theGlobalDataManager.P2currentTileID = currentTileID;
                 theGlobalDataManager.P2amountOfCoins = amountOfCoins;
                 theGlobalDataManager.P2amountOfStars = amountOfStars;
                 theGlobalDataManager.P2itemsInventory = itemsInventory;

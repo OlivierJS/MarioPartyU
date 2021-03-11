@@ -6466,6 +6466,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 784267116836463205, guid: 387050750f25e9341836a3cec05de2e9,
         type: 3}
+      propertyPath: currentTurn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 784267116836463205, guid: 387050750f25e9341836a3cec05de2e9,
+        type: 3}
       propertyPath: P1currentTile
       value: 
       objectReference: {fileID: 908320465}
@@ -6476,8 +6481,18 @@ PrefabInstance:
       objectReference: {fileID: 908320465}
     - target: {fileID: 784267116836463205, guid: 387050750f25e9341836a3cec05de2e9,
         type: 3}
+      propertyPath: P1currentTileID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 784267116836463205, guid: 387050750f25e9341836a3cec05de2e9,
+        type: 3}
       propertyPath: P2currentTileID
-      value: 4
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 784267116836463205, guid: 387050750f25e9341836a3cec05de2e9,
+        type: 3}
+      propertyPath: P1itemsInventory.Array.data[0]
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 387050750f25e9341836a3cec05de2e9, type: 3}

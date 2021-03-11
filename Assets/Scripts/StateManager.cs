@@ -7,11 +7,15 @@ public class StateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        theGlobalDataManager = GameObject.FindObjectOfType<GlobalDataManager>();
+
         //Verander alleen van 1 voor testing. Voor een normale game zou deze variable aan het begin altijd gelijk moeten zijn aan 1.
-        currentTurn = 1;
+        currentTurn = theGlobalDataManager.currentTurn;
         canMove = true;
         amountOfDice = 1;
     }
+
+    GlobalDataManager theGlobalDataManager;
 
     public int currentTurn;
     public int numberOfPlayer = 2;
@@ -29,7 +33,6 @@ public class StateManager : MonoBehaviour
     public bool IsDoneShopping = false;
     public bool gameFinished = false;
     public bool canMove = true;
-    
 
     public Player[] PlayersList;
     public GameObject diePrefab;
@@ -53,6 +56,7 @@ public class StateManager : MonoBehaviour
             DiceRollers[i].maxDiceValue = 6;
         }
         currentTurn += 1;
+        theGlobalDataManager.currentTurn = currentTurn;
         PlayersList[currentPlayerID].DiceTotal = 0;
 
         currentPlayerID = (currentPlayerID + 1) % numberOfPlayer;
