@@ -7,15 +7,19 @@ public class GlobalDataManager : MonoBehaviour
 {
     public static GlobalDataManager Instance;
 
-    public Tile P1currentTile;
+    //public Tile P1currentTile;
+    public int P1currentTileID = 0;
     public int P1amountOfCoins = 0;
     public int P1amountOfStars = 0;
     public int[] P1itemsInventory = { 0, 0, 0 };
 
-    public Tile P2currentTile;
+    //public Tile P2currentTile;
+    public int P2currentTileID = 0;
     public int P2amountOfCoins = 0;
     public int P2amountOfStars = 0;
     public int[] P2itemsInventory = { 0, 0, 0 };
+
+    public int currentTurn = 0;
 
     //Keeps current instance alive through all scenes
     void Awake()
