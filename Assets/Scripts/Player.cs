@@ -60,34 +60,7 @@ public class Player : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space) && theStateManager.isDoneUsingItem == true)
         {
             //Debug.Log("Rolled");
-            if(theStateManager.IsDoneRolling == false)
-            {
- 
-                for (int i = 0; i < theStateManager.DiceRollers.Length; i++)
-                {
-                    theStateManager.DiceRollers[i].RollDice();
-                }
-                value1 = theStateManager.DiceRollers[0].DiceValue;
-                value2 = theStateManager.DiceRollers[1].DiceValue;
-                value3 = theStateManager.DiceRollers[2].DiceValue;
-
-                //Debug.Log(AllDice[i].DiceValue);
-                switch(theStateManager.amountOfDice)
-                {
-                    case 1:
-                        theStateManager.PlayersList[theStateManager.currentPlayerID].DiceTotal += value1;
-                    break;
-                    case 2:
-                        theStateManager.PlayersList[theStateManager.currentPlayerID].DiceTotal = value1 +  value2;
-                    break;
-                    case 3:
-                        theStateManager.PlayersList[theStateManager.currentPlayerID].DiceTotal = value1 + value2 + value3;
-                    break;
-                }
- 
-                theStateManager.IsDoneRolling = true;
-            }
-
+            Roll();
             MoveCheck();
 
             if (amountOfCoins <= 0)
@@ -167,31 +140,59 @@ public class Player : MonoBehaviour
 
     void MoveCheck()
     {
-            if (theStateManager.canMove == true)
+        if (theStateManager.canMove == true)
+        {
+            //Debug.Log("Can Move");
+            if (theStateManager.IsDoneRolling == false || theStateManager.IsDoneClicking == true || theStateManager.currentPlayerID != playerID)
             {
-                //Debug.Log("Can Move");
-                if (theStateManager.IsDoneRolling == false || theStateManager.IsDoneClicking == true || theStateManager.currentPlayerID != playerID)
-                {
-                    //je kan nog niet bewegen (nog geen roll of al geklikt)
-                    //Debug.Log(playerID);
-                    return;
-                }
-
-                if (theStateManager.IsCollectingStar == false && theStateManager.IsCurrentlyShopping == false)
-                {
-                    PlayerMovement();
-                    
-                    //hier is currentTile gebruikt omdat de functie importeren van tile.cs niet lukte
-                    
-                }
-
-                if (theStateManager.IsCollectingStar == true || theStateManager.IsCurrentlyShopping == true)
-                {
-                    return;
-                }
+                //je kan nog niet bewegen (nog geen roll of al geklikt)
+                //Debug.Log(playerID);
+                return;
             }
+
+            if (theStateManager.IsCollectingStar == false && theStateManager.IsCurrentlyShopping == false)
+            {
+                PlayerMovement();                   
+                //hier is currentTile gebruikt omdat de functie importeren van tile.cs niet lukte                   
+            }
+
+            if (theStateManager.IsCollectingStar == true || theStateManager.IsCurrentlyShopping == true)
+            {
+                 return;
+            }
+        }
     }
 
+    void Roll()
+    {
+            if(theStateManager.IsDoneRolling == false)
+            {
+ 
+                for (int i = 0; i < theStateManager.DiceRollers.Length; i++)
+                {
+                    theStateManager.DiceRollers[i].RollDice();
+                }
+                value1 = theStateManager.DiceRollers[0].DiceValue;
+                value2 = theStateManager.DiceRollers[1].DiceValue;
+                value3 = theStateManager.DiceRollers[2].DiceValue;
+
+                //Debug.Log(AllDice[i].DiceValue);
+                switch(theStateManager.amountOfDice)
+                {
+                    case 1:
+                        theStateManager.PlayersList[theStateManager.currentPlayerID].DiceTotal += value1;
+                    break;
+                    case 2:
+                        theStateManager.PlayersList[theStateManager.currentPlayerID].DiceTotal = value1 +  value2;
+                    break;
+                    case 3:
+                        theStateManager.PlayersList[theStateManager.currentPlayerID].DiceTotal = value1 + value2 + value3;
+                    break;
+                }
+ 
+                theStateManager.IsDoneRolling = true;
+            }       
+    }
 
 
     void ItemUsage()

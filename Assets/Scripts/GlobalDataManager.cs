@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GlobalDataManager : MonoBehaviour
 {
@@ -27,6 +28,19 @@ public class GlobalDataManager : MonoBehaviour
         else if (Instance != this)
         {
             Destroy(gameObject);
+        }
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        }
+
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            SceneManager.LoadScene("Scene", LoadSceneMode.Single);
         }
     }
 }
