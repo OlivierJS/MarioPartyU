@@ -210,7 +210,18 @@ public class Player : MonoBehaviour
 
     void ItemUsage()
     {
-        ItemMenu.SetActive(true);
+        if(itemsInventory[0] == 0 && itemsInventory[1] == 0 && itemsInventory[2] == 0)
+        {
+            theStateManager.isDoneUsingItem = true;
+            for (int i = 0; i < theStateManager.DiceRollers.Length; i++)
+            {
+                theStateManager.DiceRollers[i].stopRandom = false;
+            }
+        }
+        else
+        {
+            ItemMenu.SetActive(true);
+        }
     }
 
 

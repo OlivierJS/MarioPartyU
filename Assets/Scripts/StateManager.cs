@@ -12,6 +12,7 @@ public class StateManager : MonoBehaviour
         //Verander alleen van 1 voor testing. Voor een normale game zou deze variable aan het begin altijd gelijk moeten zijn aan 1.
         currentTurn = theGlobalDataManager.currentTurn;
         canMove = true;
+        stopWaiting = true;
         amountOfDice = 1;
     }
 
@@ -33,6 +34,7 @@ public class StateManager : MonoBehaviour
     public bool IsDoneShopping = false;
     public bool gameFinished = false;
     public bool canMove = true;
+    bool stopWaiting;
 
     public Player[] PlayersList;
     public GameObject diePrefab;
@@ -45,6 +47,7 @@ public class StateManager : MonoBehaviour
 
     public void NewTurn()
     {
+        stopWaiting = true;
         isDoneUsingItem = false;
         IsDoneRolling = false;
         IsDoneClicking = false;
@@ -60,6 +63,17 @@ public class StateManager : MonoBehaviour
         PlayersList[currentPlayerID].DiceTotal = 0;
 
         currentPlayerID = (currentPlayerID + 1) % numberOfPlayer;
+        StopCoroutine(WaitforNewTurn());
+    }
+    
+    IEnumerator WaitforNewTurn()
+    {
+        stopWaiting = false;
+        yield return new WaitForSeconds(2);
+        if(stopWaiting == false)
+        {
+            NewTurn();
+        }
     }
 
     // Update is called once per frame
@@ -69,7 +83,10 @@ public class StateManager : MonoBehaviour
         {
             if (currentTurn < maxTurns)
             {
-                NewTurn();
+                if(stopWaiting == true)
+                {
+                    StartCoroutine(WaitforNewTurn());
+                }
                 return;
             }
             else
