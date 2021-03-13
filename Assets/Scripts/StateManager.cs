@@ -13,6 +13,7 @@ public class StateManager : MonoBehaviour
         //Verander alleen van 1 voor testing. Voor een normale game zou deze variable aan het begin altijd gelijk moeten zijn aan 1.
         currentTurn = theGlobalDataManager.currentTurn;
         canMove = true;
+        stopWaiting = true;
         amountOfDice = 1;
     }
 
@@ -35,6 +36,7 @@ public class StateManager : MonoBehaviour
     public bool gameFinished = false;
     public bool canMove = true;
     bool goToMinigame = false;
+    bool stopWaiting;
 
     public Player[] PlayersList;
     public GameObject diePrefab;
@@ -47,12 +49,13 @@ public class StateManager : MonoBehaviour
 
     public void NewTurn()
     {
+        stopWaiting = true;
         isDoneUsingItem = false;
         IsDoneRolling = false;
         IsDoneClicking = false;
         IsDoneCollecting = false;
         IsDoneShopping = false;
-        canMove = true;  
+        canMove = true;
         for (int i = 0; i < DiceRollers.Length; i++)
         {
             DiceRollers[i].maxDiceValue = 6;
@@ -68,11 +71,22 @@ public class StateManager : MonoBehaviour
         PlayersList[currentPlayerID].DiceTotal = 0;
 
         currentPlayerID = (currentPlayerID + 1) % numberOfPlayer;
+        StopCoroutine(WaitforNewTurn());
 
         if (goToMinigame == true)
         {
             goToMinigame = false;
             SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        }
+    }
+    
+    IEnumerator WaitforNewTurn()
+    {
+        stopWaiting = false;
+        yield return new WaitForSeconds(2);
+        if(stopWaiting == false)
+        {
+            NewTurn();
         }
     }
 
@@ -83,7 +97,10 @@ public class StateManager : MonoBehaviour
         {
             if (currentTurn < maxTurns)
             {
-                NewTurn();
+                if(stopWaiting == true)
+                {
+                    StartCoroutine(WaitforNewTurn());
+                }
                 return;
             }
             else
