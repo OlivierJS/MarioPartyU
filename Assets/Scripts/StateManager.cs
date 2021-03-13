@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StateManager : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class StateManager : MonoBehaviour
     public bool IsDoneShopping = false;
     public bool gameFinished = false;
     public bool canMove = true;
+    bool goToMinigame = false;
 
     public Player[] PlayersList;
     public GameObject diePrefab;
@@ -55,11 +57,23 @@ public class StateManager : MonoBehaviour
         {
             DiceRollers[i].maxDiceValue = 6;
         }
+
+        if (currentTurn % 2 == 0)
+        {
+            goToMinigame = true;
+        }
+
         currentTurn += 1;
         theGlobalDataManager.currentTurn = currentTurn;
         PlayersList[currentPlayerID].DiceTotal = 0;
 
         currentPlayerID = (currentPlayerID + 1) % numberOfPlayer;
+
+        if (goToMinigame == true)
+        {
+            goToMinigame = false;
+            SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        }
     }
 
     // Update is called once per frame

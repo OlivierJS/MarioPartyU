@@ -45,11 +45,12 @@ public class CardgameManager : MonoBehaviour
         if(P1Win == true)
         {
             theGlobalDataManager.P1amountOfCoins += 10; 
-            Debug.Log(theGlobalDataManager.P1amountOfCoins);
+            Debug.Log("Player 1 wins!");
         }
         if(P2Win == true)
         {
-            theGlobalDataManager.P2amountOfCoins += 10; 
+            theGlobalDataManager.P2amountOfCoins += 10;
+            Debug.Log("Player 2 wins!");
         }
         returning = false;
         yield return new WaitForSeconds(5);
