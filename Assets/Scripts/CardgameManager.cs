@@ -11,10 +11,12 @@ public class CardgameManager : MonoBehaviour
         //winID = Random.Range(1, 5);
         winID = 1;
         theGlobalDataManager = GameObject.FindObjectOfType<GlobalDataManager>();
-        returning = true;
+        oldP1coins = theGlobalDataManager.P1amountOfCoins;
+        oldP2coins = theGlobalDataManager.P2amountOfCoins;
     }
 
-    bool returning;
+    int oldP1coins;
+    int oldP2coins;
     public int winID;
     public bool P1canMove;
     public bool P2canMove;
@@ -28,9 +30,15 @@ public class CardgameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(P1Done == true && P2Done == true && returning == true)
+        Debug.Log(P2Win);
+        if(P1Done == true && P2Done == true && theGlobalDataManager.P1amountOfCoins == oldP1coins && theGlobalDataManager.P2amountOfCoins == oldP2coins)
         {
             StartCoroutine(ReturntoBoard());
+        }
+
+        else
+        {
+            StopCoroutine(ReturntoBoard());
         }
 
         if(P1canMove == true || P2canMove == true)
@@ -45,13 +53,13 @@ public class CardgameManager : MonoBehaviour
         if(P1Win == true)
         {
             theGlobalDataManager.P1amountOfCoins += 10; 
-            Debug.Log(theGlobalDataManager.P1amountOfCoins);
+            Debug.Log("Player 1 wins!");
         }
         if(P2Win == true)
         {
-            theGlobalDataManager.P2amountOfCoins += 10; 
+           theGlobalDataManager.P2amountOfCoins += 10;
+           Debug.Log("Player 2 wins!");
         }
-        returning = false;
         yield return new WaitForSeconds(5);
         SceneManager.LoadScene("Scene", LoadSceneMode.Single);
     }

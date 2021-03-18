@@ -60,8 +60,7 @@ public class Card : MonoBehaviour
                 theCardgameManager.P2canMove = false;
                 if(NextCard.cardState == 1)
                 {
-                    NextCard.NextCard.cardState = 3;
-                    
+                    NextCard.NextCard.cardState = 3;                   
                 }
                 else
                 {
@@ -136,6 +135,7 @@ public class Card : MonoBehaviour
                     if(theCardgameManager.winID == cardID)
                     {
                         image.texture = CardTextures[4];
+                        Debug.Log("P1 W");
                         theCardgameManager.P1Win = true;
                     }
                     else

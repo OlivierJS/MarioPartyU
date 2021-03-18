@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StateManager : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class StateManager : MonoBehaviour
     public bool IsDoneShopping = false;
     public bool gameFinished = false;
     public bool canMove = true;
+    bool goToMinigame = false;
     bool stopWaiting;
 
     public Player[] PlayersList;
@@ -53,17 +55,29 @@ public class StateManager : MonoBehaviour
         IsDoneClicking = false;
         IsDoneCollecting = false;
         IsDoneShopping = false;
-        canMove = true;  
+        canMove = true;
         for (int i = 0; i < DiceRollers.Length; i++)
         {
             DiceRollers[i].maxDiceValue = 6;
         }
+
+        if (currentTurn % 2 == 0)
+        {
+            goToMinigame = true;
+        }
+
         currentTurn += 1;
         theGlobalDataManager.currentTurn = currentTurn;
         PlayersList[currentPlayerID].DiceTotal = 0;
 
         currentPlayerID = (currentPlayerID + 1) % numberOfPlayer;
         StopCoroutine(WaitforNewTurn());
+
+        if (goToMinigame == true)
+        {
+            goToMinigame = false;
+            SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        }
     }
     
     IEnumerator WaitforNewTurn()

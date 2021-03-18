@@ -139,6 +139,7 @@ public class Player : MonoBehaviour
         //teleporteer player naar finalTile, tenzij hij bezig is met star collection
         if (finalTile.tileTypeID != 3 && finalTile.tileTypeID != 5)
         {
+            currentTileID = finalTile.tileID;
             this.transform.position = finalTile.transform.position;
             //DiceTotal = 0;
             currentTile = finalTile;
