@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class Tile : MonoBehaviour
     StateManager theStateManager;
     Player player;
     Player otherplayer;
+    public GameObject LuckySpaceMenu;
+    public Text MenuText;
+    int MenuOption;
+    bool waiting;
+    int effect;
+    float timeRemaining;
 
 
     void tileTypeSetup()
@@ -97,36 +104,9 @@ public class Tile : MonoBehaviour
 
         public void LuckySpace()
         {
-        int effect = UnityEngine.Random.Range(1, 5);
-            player = theStateManager.PlayersList[theStateManager.currentPlayerID];
-            otherplayer = theStateManager.PlayersList[(theStateManager.currentPlayerID + 1) % theStateManager.numberOfPlayer];
-            
-;           switch (effect)
-            {
-                case 1:
-                    player.amountOfCoins += UnityEngine.Random.Range(3, 6);
-                break;
-                case 2:
-                    //TO DO: Gives players negative coins. Fix that
-                    otherplayer.amountOfCoins -= UnityEngine.Random.Range(3, 6);
-                    if (otherplayer.amountOfCoins < 0)
-                    {
-                        otherplayer.amountOfCoins = 0;
-                    }
-                break;
-                case 3:
-                    Debug.Log(player);
-                    GetItem();
-                break;
-                case 4:
-                    int temp_coin;
-                    int temp_coin2;
-                    temp_coin = player.amountOfCoins;
-                    temp_coin2 = otherplayer.amountOfCoins;
-                    player.amountOfCoins = temp_coin2; 
-                    otherplayer.amountOfCoins = temp_coin;
-                break;
-            }
+            waiting = true;
+            timeRemaining = 5;
+            effect = UnityEngine.Random.Range(1, 5);
         }
 
         public void GetItem()
@@ -148,7 +128,80 @@ public class Tile : MonoBehaviour
         // Update is called once per frame
         void Update()
         {
-        
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                MenuOption += 1;
+                Debug.Log(MenuOption);
+                LuckySpaceMenu.SetActive(true);
+            }
+            if(timeRemaining <= 0.5)
+            {
+                MenuOption = effect;
+            }
+
+            if(timeRemaining <= 0 && waiting == true)
+            {
+                timeRemaining = 0;
+                LuckySpaceMenu.SetActive(false);
+                if(theStateManager.IsDoneAnimating == false)
+                {
+                    player = theStateManager.PlayersList[theStateManager.currentPlayerID];
+                    otherplayer = theStateManager.PlayersList[(theStateManager.currentPlayerID + 1) % theStateManager.numberOfPlayer];
+            
+                    switch (effect)
+                    {
+                        case 1:
+                            player.amountOfCoins += UnityEngine.Random.Range(3, 6);
+                        break;
+                        case 2:
+                            //TO DO: Gives players negative coins. Fix that
+                            otherplayer.amountOfCoins -= UnityEngine.Random.Range(3, 6);
+                            if (otherplayer.amountOfCoins < 0)
+                            {
+                                otherplayer.amountOfCoins = 0;
+                            }
+                        break;
+                        case 3:
+                            int temp_coin;
+                            int temp_coin2;
+                            temp_coin = player.amountOfCoins;
+                            temp_coin2 = otherplayer.amountOfCoins;
+                            player.amountOfCoins = temp_coin2; 
+                            otherplayer.amountOfCoins = temp_coin;
+                        break;
+                        case 4:
+                            Debug.Log(player);
+                            GetItem();
+                        break;
+                    }
+                }
+                theStateManager.IsDoneAnimating = true;
+                waiting = false;
+                MenuOption = 0;
+                Debug.Log("Dead");
+                
+            }
+
+            switch(MenuOption % 5)
+            {
+                case 1:
+                    MenuText.text = "     Lucky Tile" + "\n> +3-5 Coins to yourself" +" \n  -3-5 Coins to enemy" + "\n  Switch Coins with enemy" + "\n  Get item";
+                break;
+
+                case 2:
+                    MenuText.text = "     Lucky Tile" + "\n  +3-5 Coins to yourself" +" \n> -3-5 Coins to enemy" + "\n  Switch Coins with enemy" + "\n  Get item";
+                break;
+
+                case 3:
+                    MenuText.text = "     Lucky Tile" + "\n  +3-5 Coins to yourself" +" \n  -3-5 Coins to enemy" + "\n> Switch Coins with enemy" + "\n  Get item";
+                break;
+
+                case 4:
+                    MenuText.text = "     Lucky Tile" + "\n  +3-5 Coins to yourself" +" \n  -3-5 Coins to enemy" + "\n  Switch Coins with enemy" + "\n> Get item";
+                break;
+
+            }
         }
        /* public static void RemoveAt<T>(ref T[] arr, int index)
         {

@@ -83,7 +83,7 @@ public class MashgameManager : MonoBehaviour
         {
             P2Win = true;
         }
-        else
+        if(amountOfPressesP1 == amountOfPressesP2)
         {
             draw = true;
         }

@@ -49,9 +49,14 @@ MonoBehaviour:
   TileTexture:
   - {fileID: 2800000, guid: 090a96644f4c06f4aa1e36a8448d85f5, type: 3}
   - {fileID: 2800000, guid: 1419196ff87da604193f680263e4f233, type: 3}
+  LuckySpaceMenu: {fileID: 5470697796785730637, guid: 885ebcf238943c844882ad8877bbfc89,
+    type: 3}
+  MenuText: {fileID: 0}
   NextTiles:
   - {fileID: 0}
-  tileTypeID: 4
+  PrevTile: {fileID: 0}
+  tileTypeID: 0
+  tileID: 0
 --- !u!33 &5753403495717002847
 MeshFilter:
   m_ObjectHideFlags: 0

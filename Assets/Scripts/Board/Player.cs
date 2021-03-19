@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        if (theStateManager.isDoneUsingItem == false)
+        if (theStateManager.isDoneUsingItem == false && theStateManager.goToMinigame == false)
         {
             ItemUsage();
         }
@@ -147,8 +147,11 @@ public class Player : MonoBehaviour
             {
                 currentTile.TileEffects(currentTile, this);
             }
-
             theStateManager.IsDoneClicking = true;
+            if(currentTile.tileTypeID != 4)
+            {
+                theStateManager.IsDoneAnimating = true;
+            }
         }
     }
 
@@ -209,7 +212,7 @@ public class Player : MonoBehaviour
     }
 
 
-    void ItemUsage()
+    public void ItemUsage()
     {
         if(itemsInventory[0] == 0 && itemsInventory[1] == 0 && itemsInventory[2] == 0)
         {

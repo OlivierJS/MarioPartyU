@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StateManager : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class StateManager : MonoBehaviour
     void Start()
     {
         theGlobalDataManager = GameObject.FindObjectOfType<GlobalDataManager>();
-
+        PlayersList[currentPlayerID].ItemUsage();
         //Verander alleen van 1 voor testing. Voor een normale game zou deze variable aan het begin altijd gelijk moeten zijn aan 1.
         currentTurn = theGlobalDataManager.currentTurn;
         canMove = true;
@@ -23,19 +24,23 @@ public class StateManager : MonoBehaviour
     public int numberOfPlayer = 2;
     public int currentPlayerID = 0;
     public int amountOfDice;
+    float timeRemaining;
+    int gameNo;
+    int MenuOption;
 
     public int maxTurns = 10;
 
     public bool isDoneUsingItem = false;
     public bool IsDoneRolling = false;
     public bool IsDoneClicking = false;
+    public bool IsDoneAnimating = false;
     public bool IsCollectingStar = false;
     public bool IsDoneCollecting = false;
     public bool IsCurrentlyShopping = false;
     public bool IsDoneShopping = false;
     public bool gameFinished = false;
     public bool canMove = true;
-    bool goToMinigame = false;
+    public bool goToMinigame = false;
     bool stopWaiting;
 
     public Player[] PlayersList;
@@ -46,6 +51,8 @@ public class StateManager : MonoBehaviour
     public GameObject Dice3;
     public GameObject ShopMenu;
     public GameObject StarMenu;
+    public GameObject MinigameSelecter;
+    public Text MinigameText;
 
     public void NewTurn()
     {
@@ -53,9 +60,13 @@ public class StateManager : MonoBehaviour
         isDoneUsingItem = false;
         IsDoneRolling = false;
         IsDoneClicking = false;
+        IsDoneAnimating = false;
         IsDoneCollecting = false;
         IsDoneShopping = false;
         canMove = true;
+        MenuOption = 0;
+        amountOfDice = 1;
+
         for (int i = 0; i < DiceRollers.Length; i++)
         {
             DiceRollers[i].maxDiceValue = 6;
@@ -64,6 +75,8 @@ public class StateManager : MonoBehaviour
         if (currentTurn % 2 == 0)
         {
             goToMinigame = true;
+            timeRemaining = 3;
+            gameNo = Random.Range(1, 4);
         }
 
         currentTurn += 1;
@@ -72,12 +85,6 @@ public class StateManager : MonoBehaviour
 
         currentPlayerID = (currentPlayerID + 1) % numberOfPlayer;
         StopCoroutine(WaitforNewTurn());
-
-        if (goToMinigame == true)
-        {
-            goToMinigame = false;
-            SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
-        }
     }
     
     IEnumerator WaitforNewTurn()
@@ -93,7 +100,7 @@ public class StateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsDoneRolling == true && IsDoneClicking == true && isDoneUsingItem == true)
+        if (IsDoneRolling == true && IsDoneClicking == true && isDoneUsingItem == true && IsDoneAnimating == true)
         {
             if (currentTurn < maxTurns)
             {
@@ -108,7 +115,55 @@ public class StateManager : MonoBehaviour
                 gameFinished = true;
                 return;
             }
-        }    
+        }
+        
+        if (goToMinigame == true)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                MenuOption += 1;
+                MinigameSelecter.SetActive(true);
+            }
+            if(timeRemaining <= 0.5)
+            {
+                MenuOption = gameNo;
+            }
+            if(timeRemaining <= 0)
+            {
+                timeRemaining = 0;
+                MinigameSelecter.SetActive(false);
+                switch(gameNo)
+                {
+                    case 1:
+                        SceneManager.LoadScene("Mashing minigame", LoadSceneMode.Single);
+                    break;
+                    case 2:
+                        SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                    break;
+                    case 3:
+                        Debug.Log("F");
+                    break;
+                }
+                goToMinigame = false;
+            }
+
+        }
+
+        switch(MenuOption % 4)
+        {
+            case 1:
+                MinigameText.text = "        Minigame Time!" + "\n> Mashing" + "\n   Cards" + "\n   Platforming";
+            break;
+
+            case 2:
+              MinigameText.text = "        Minigame Time!" + "\n   Mashing" + "\n> Cards" + "\n   Platforming";
+            break;
+
+            case 3:
+              MinigameText.text = "        Minigame Time!" + "\n   Mashing" + "\n   Cards" + "\n> Platforming";
+            break;
+        }
              
         switch(amountOfDice)
         {
