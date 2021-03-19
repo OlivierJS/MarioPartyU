@@ -8,9 +8,9 @@ public class CardgameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //winID = Random.Range(1, 5);
-        winID = 1;
+        winID = Random.Range(1, 5);
         theGlobalDataManager = GameObject.FindObjectOfType<GlobalDataManager>();
+        theTimer = GameObject.FindObjectOfType<Timer>();
         oldP1coins = theGlobalDataManager.P1amountOfCoins;
         oldP2coins = theGlobalDataManager.P2amountOfCoins;
     }
@@ -26,20 +26,13 @@ public class CardgameManager : MonoBehaviour
     public bool P2Win;
     GlobalDataManager theGlobalDataManager;
     public Card[] Cards;
+    Timer theTimer;
 
     // Update is called once per frame
     void Update()
-    {
-        Debug.Log(P2Win);
-        if(P1Done == true && P2Done == true && theGlobalDataManager.P1amountOfCoins == oldP1coins && theGlobalDataManager.P2amountOfCoins == oldP2coins)
-        {
-            StartCoroutine(ReturntoBoard());
-        }
-
-        else
-        {
-            StopCoroutine(ReturntoBoard());
-        }
+    {  
+        GameEnd();
+        TimeUp();
 
         if(P1canMove == true || P2canMove == true)
         {
@@ -49,7 +42,7 @@ public class CardgameManager : MonoBehaviour
 
     IEnumerator ReturntoBoard()
     {
-        Debug.Log("Returning to board");
+        theTimer.GameIsDone = true;
         if(P1Win == true)
         {
             theGlobalDataManager.P1amountOfCoins += 10; 
@@ -70,4 +63,39 @@ public class CardgameManager : MonoBehaviour
         P1canMove = true;
         P2canMove = true;
     }
+
+    void GameEnd()
+    {
+        if(P1Done == true && P2Done == true && theGlobalDataManager.P1amountOfCoins == oldP1coins && theGlobalDataManager.P2amountOfCoins == oldP2coins)
+        {
+            StartCoroutine(ReturntoBoard());
+        }
+
+        else
+        {
+            StopCoroutine(ReturntoBoard());
+        }
+    }
+
+    void TimeUp()
+    {
+        if(theTimer.timeRemaining <= 0)
+        {
+            P1Done = true;
+            P2Done = true;
+            for(int i = 0; i < Cards.Length; i++)
+            {
+                if(Cards[i].cardState == 1)
+                {
+                    Cards[i].cardState = 2;
+                }
+
+                if(Cards[i].cardState == 3)
+                {
+                    Cards[i].cardState = 4;
+                }
+            }
+        }
+    }
+
 }

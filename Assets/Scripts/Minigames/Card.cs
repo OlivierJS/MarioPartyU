@@ -135,7 +135,6 @@ public class Card : MonoBehaviour
                     if(theCardgameManager.winID == cardID)
                     {
                         image.texture = CardTextures[4];
-                        Debug.Log("P1 W");
                         theCardgameManager.P1Win = true;
                     }
                     else
