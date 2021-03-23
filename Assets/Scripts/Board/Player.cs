@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
             }
         }
 
+        targetposition = currentTile.transform.position;
         this.transform.position = currentTile.transform.position;
     }
 
@@ -55,6 +56,10 @@ public class Player : MonoBehaviour
     int value1;
     int value2;
     int value3;
+
+    public Vector3 targetposition;
+    Vector3 velocity;
+    float smoothTime = 0.25f;
 
     StateManager theStateManager;
     GlobalDataManager theGlobalDataManager;
@@ -84,14 +89,21 @@ public class Player : MonoBehaviour
             SavePlayer();
         }
 
-
+        if(this.transform.position != targetposition)
+        {
+            this.transform.position = Vector3.SmoothDamp(this.transform.position, targetposition, ref velocity, smoothTime);
+        }
         //Debug.Log("Player:" + playerID + ", " + amountOfCoins);
+    }
+
+    void SetNewTargetPosition(Vector3 pos)
+    {
+        targetposition = pos;
     }
 
     public void PlayerMovement()
     {
         Tile finalTile = currentTile;
- 
         for (int i = 0; i < theStateManager.PlayersList[theStateManager.currentPlayerID].DiceTotal; i++)
         {
             if (finalTile == null)
@@ -140,9 +152,9 @@ public class Player : MonoBehaviour
         if (finalTile.tileTypeID != 3 && finalTile.tileTypeID != 5)
         {
             currentTileID = finalTile.tileID;
-            this.transform.position = finalTile.transform.position;
-            //DiceTotal = 0;
+            //this.transform.position = finalTile.transform.position;
             currentTile = finalTile;
+            SetNewTargetPosition(currentTile.transform.position);
             if (currentTile != null)
             {
                 currentTile.TileEffects(currentTile, this);
@@ -235,7 +247,7 @@ public class Player : MonoBehaviour
             if (tile.tileTypeID == 3)
             {
                 theStateManager.IsCollectingStar = true;
-                this.transform.position = tile.transform.position;
+                SetNewTargetPosition(tile.transform.position);
                 StarMenu.SetActive(true);
                 theStateManager.canMove = false;               
                 theStateManager.IsCollectingStar = false;
@@ -250,7 +262,7 @@ public class Player : MonoBehaviour
             if (tile.tileTypeID == 5)
             {
                 theStateManager.IsCurrentlyShopping = true;
-                this.transform.position = tile.transform.position;
+                SetNewTargetPosition(tile.transform.position);
                 ShopMenu.SetActive(true);
                 theStateManager.canMove = false;
                 theStateManager.IsCurrentlyShopping = false;
