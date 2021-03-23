@@ -82,7 +82,7 @@ public class ItemButton3 : MonoBehaviour
                     if (currentPlayer.currentTile.tileTypeID == 3)
                     {
                         currentPlayer.currentTile = currentPlayer.currentTile.PrevTile;
-                        currentPlayer.transform.position = currentPlayer.currentTile.transform.position;
+                        currentPlayer.targetposition = currentPlayer.currentTile.transform.position;
                         break;
                     }
                 }
