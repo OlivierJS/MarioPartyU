@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mashing minigame.unity
     guid: d38ea974be5d59c469554ad83d550792
+  - enabled: 1
+    path: Assets/Scenes/PlatformingMinigame.unity
+    guid: 6f19e7a837396b248bb91cd2941975c9
   m_configObjects: {}
