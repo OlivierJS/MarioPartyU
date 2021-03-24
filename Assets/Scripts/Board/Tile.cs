@@ -135,7 +135,7 @@ public class Tile : MonoBehaviour
                 Debug.Log(MenuOption);
                 LuckySpaceMenu.SetActive(true);
             }
-            if(timeRemaining <= 0.5)
+            if(timeRemaining <= 2)
             {
                 MenuOption = effect;
             }

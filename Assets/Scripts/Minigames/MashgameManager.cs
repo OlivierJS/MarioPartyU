@@ -63,12 +63,14 @@ public class MashgameManager : MonoBehaviour
 
         if(theTimer.timeRemaining <= 0 && P2Stop == false && theGlobalDataManager.P1amountOfCoins == oldP1coins && theGlobalDataManager.P2amountOfCoins == oldP2coins)
         {
+            P2Stop = true;
             StopCoroutine(NextPlayer());
             CompareScores();
             StartCoroutine(ReturntoBoard());
         }
-        else
+        if(theGlobalDataManager.P1amountOfCoins != oldP1coins || theGlobalDataManager.P2amountOfCoins != oldP2coins)
         {
+            P2Stop = true;
             StopCoroutine(ReturntoBoard());
         }
     }
