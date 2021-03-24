@@ -19,7 +19,7 @@ public class Starbuttoncmd : MonoBehaviour
     {
           player = theStateManager.PlayersList[theStateManager.currentPlayerID];
 
-          if (player.amountOfCoins > 10)
+          if (player.amountOfCoins >= 10)
           {
                 player.amountOfStars += 1;
                 player.amountOfCoins -= 10;

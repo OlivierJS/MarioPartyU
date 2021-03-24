@@ -47,6 +47,11 @@ public class GlobalDataManager : MonoBehaviour
             SceneManager.LoadScene("Mashing Minigame", LoadSceneMode.Single);
         }
 
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            SceneManager.LoadScene("PlatformingMinigame", LoadSceneMode.Single);
+        }
+
         if(Input.GetKeyDown(KeyCode.B))
         {
             SceneManager.LoadScene("Scene", LoadSceneMode.Single);
