@@ -142,7 +142,7 @@ public class StateManager : MonoBehaviour
                         SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                     break;
                     case 3:
-                        Debug.Log("F");
+                        SceneManager.LoadScene("PlatformingMinigame", LoadSceneMode.Single);
                     break;
                 }
                 goToMinigame = false;

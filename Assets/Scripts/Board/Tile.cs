@@ -132,7 +132,7 @@ public class Tile : MonoBehaviour
             {
                 timeRemaining -= Time.deltaTime;
                 MenuOption += 1;
-                Debug.Log(MenuOption);
+                Debug.Log(timeRemaining);
                 LuckySpaceMenu.SetActive(true);
             }
             if(timeRemaining <= 2)
@@ -171,7 +171,6 @@ public class Tile : MonoBehaviour
                             otherplayer.amountOfCoins = temp_coin;
                         break;
                         case 4:
-                            Debug.Log(player);
                             GetItem();
                         break;
                     }
@@ -179,7 +178,6 @@ public class Tile : MonoBehaviour
                 theStateManager.IsDoneAnimating = true;
                 waiting = false;
                 MenuOption = 0;
-                Debug.Log("Dead");
                 
             }
 
