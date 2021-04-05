@@ -16,6 +16,7 @@ public class StateManager : MonoBehaviour
         canMove = true;
         stopWaiting = true;
         amountOfDice = 1;
+        maxTurns = 40;
     }
 
     GlobalDataManager theGlobalDataManager;
@@ -28,7 +29,7 @@ public class StateManager : MonoBehaviour
     int gameNo;
     int MenuOption;
 
-    public int maxTurns = 10;
+    public int maxTurns = 40;
 
     public bool isDoneUsingItem = false;
     public bool IsDoneRolling = false;

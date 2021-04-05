@@ -51,18 +51,17 @@ public class ItemButton1 : MonoBehaviour
 
     public void UseItem()
     {
-        //TO DO: Add item functionality (could be done using a switch statement)
         switch (currentPlayer.itemsInventory[0])
         {
             case 0:
                 theStateManager.amountOfDice = 1;
             break;
             case 1:
-                // 2 keer dobbelen (2 dice laten verschijnen?)
+                // 2 keer dobbelen (2 dice laten verschijnen)
                 theStateManager.amountOfDice = 2;
             break;
             case 2:
-                //3 keer dobbelen (3 dice laten verschijnen?)
+                //3 keer dobbelen (3 dice laten verschijnen)
                 theStateManager.amountOfDice = 3;
             break;
             case 3:

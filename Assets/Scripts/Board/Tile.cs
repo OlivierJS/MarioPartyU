@@ -148,65 +148,59 @@ public class Tile : MonoBehaviour
                 {
                     player = theStateManager.PlayersList[theStateManager.currentPlayerID];
                     otherplayer = theStateManager.PlayersList[(theStateManager.currentPlayerID + 1) % theStateManager.numberOfPlayer];
-            
-                    switch (effect)
-                    {
-                        case 1:
-                            player.amountOfCoins += UnityEngine.Random.Range(3, 6);
-                        break;
-                        case 2:
-                            //TO DO: Gives players negative coins. Fix that
-                            otherplayer.amountOfCoins -= UnityEngine.Random.Range(3, 6);
-                            if (otherplayer.amountOfCoins < 0)
-                            {
-                                otherplayer.amountOfCoins = 0;
-                            }
-                        break;
-                        case 3:
-                            int temp_coin;
-                            int temp_coin2;
-                            temp_coin = player.amountOfCoins;
-                            temp_coin2 = otherplayer.amountOfCoins;
-                            player.amountOfCoins = temp_coin2; 
-                            otherplayer.amountOfCoins = temp_coin;
-                        break;
-                        case 4:
-                            GetItem();
-                        break;
-                    }
+                    LuckySpaceEffects();
                 }
                 theStateManager.IsDoneAnimating = true;
                 waiting = false;
                 MenuOption = 0;
                 
             }
-
-            switch(MenuOption % 5)
-            {
-                case 1:
-                    MenuText.text = "     Lucky Tile" + "\n> +3-5 Coins to yourself" +" \n  -3-5 Coins to enemy" + "\n  Switch Coins with enemy" + "\n  Get item";
-                break;
-
-                case 2:
-                    MenuText.text = "     Lucky Tile" + "\n  +3-5 Coins to yourself" +" \n> -3-5 Coins to enemy" + "\n  Switch Coins with enemy" + "\n  Get item";
-                break;
-
-                case 3:
-                    MenuText.text = "     Lucky Tile" + "\n  +3-5 Coins to yourself" +" \n  -3-5 Coins to enemy" + "\n> Switch Coins with enemy" + "\n  Get item";
-                break;
-
-                case 4:
-                    MenuText.text = "     Lucky Tile" + "\n  +3-5 Coins to yourself" +" \n  -3-5 Coins to enemy" + "\n  Switch Coins with enemy" + "\n> Get item";
-                break;
-
-            }
+            MenuScroll();
         }
-       /* public static void RemoveAt<T>(ref T[] arr, int index)
+    public void LuckySpaceEffects()
+    {
+        switch (effect)
         {
-            // replace the element at index with the last element
-            arr[index] = arr[arr.Length - 1];
-            // finally, let's decrement Array's size by one
-            Array.Resize(ref arr, arr.Length - 1);       
+            case 1:
+                player.amountOfCoins += UnityEngine.Random.Range(3, 6);
+            break;
+            case 2:
+                otherplayer.amountOfCoins -= UnityEngine.Random.Range(3, 6);
+                if (otherplayer.amountOfCoins < 0)
+                {
+                    otherplayer.amountOfCoins = 0;
+                }
+            break;
+            case 3:
+                int temp_coin;
+                int temp_coin2;
+                temp_coin = player.amountOfCoins;
+                temp_coin2 = otherplayer.amountOfCoins;
+                player.amountOfCoins = temp_coin2; 
+                otherplayer.amountOfCoins = temp_coin;
+            break;
+            case 4:
+                GetItem();
+            break;
         }
-       */                
+    }
+
+    public void MenuScroll()
+    {
+        switch(MenuOption % 5)
+        {
+            case 1:
+                MenuText.text = "     Lucky Tile" + "\n> +3-5 Coins to yourself" +" \n  -3-5 Coins to enemy" + "\n  Switch Coins with enemy" + "\n  Get item";
+            break;
+            case 2:
+                MenuText.text = "     Lucky Tile" + "\n  +3-5 Coins to yourself" +" \n> -3-5 Coins to enemy" + "\n  Switch Coins with enemy" + "\n  Get item";
+            break;
+            case 3:
+                MenuText.text = "     Lucky Tile" + "\n  +3-5 Coins to yourself" +" \n  -3-5 Coins to enemy" + "\n> Switch Coins with enemy" + "\n  Get item";
+            break;
+            case 4:
+                MenuText.text = "     Lucky Tile" + "\n  +3-5 Coins to yourself" +" \n  -3-5 Coins to enemy" + "\n  Switch Coins with enemy" + "\n> Get item";
+            break;
+            }
+    }
 }

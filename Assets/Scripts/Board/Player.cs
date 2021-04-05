@@ -15,14 +15,12 @@ public class Player : MonoBehaviour
         switch (playerID)
         {
             case 0:
-                //currentTile = theGlobalDataManager.P1currentTile;
                 currentTileID = theGlobalDataManager.P1currentTileID;
                 amountOfCoins = theGlobalDataManager.P1amountOfCoins;
                 amountOfStars = theGlobalDataManager.P1amountOfStars;
                 itemsInventory = theGlobalDataManager.P1itemsInventory;
                 break;
             case 1:
-                //currentTile = theGlobalDataManager.P2currentTile;
                 currentTileID = theGlobalDataManager.P2currentTileID;
                 amountOfCoins = theGlobalDataManager.P2amountOfCoins;
                 amountOfStars = theGlobalDataManager.P2amountOfStars;
@@ -77,7 +75,6 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) && theStateManager.isDoneUsingItem == true)
         {
-            //Debug.Log("Rolled");
             Roll();
             MoveCheck();
 
@@ -93,7 +90,6 @@ public class Player : MonoBehaviour
         {
             this.transform.position = Vector3.SmoothDamp(this.transform.position, targetposition, ref velocity, smoothTime);
         }
-        //Debug.Log("Player:" + playerID + ", " + amountOfCoins);
     }
 
     void SetNewTargetPosition(Vector3 pos)
@@ -112,20 +108,11 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (finalTile.NextTiles.Length > 1)
-                {
-                    //keuze van speler moet nog geïmplementeerd worden
-                    finalTile = finalTile.NextTiles[0];
-                }
-                else
-                {
-                    finalTile = finalTile.NextTiles[0];
-                }
+                finalTile = finalTile.NextTiles[0];
             }
             if (finalTile.tileTypeID == 3 && theStateManager.IsDoneCollecting == false)
             {
                 StarCollection(finalTile);
-                Debug.Log("You landed on a star tile!");
                 break;
             }
             if (finalTile.tileTypeID == 5 && theStateManager.IsDoneShopping == false)
@@ -133,7 +120,6 @@ public class Player : MonoBehaviour
                 if (itemsInventory[0] == 0 || itemsInventory[1] == 0 || itemsInventory[2] == 0)
                 {
                     Shopping(finalTile);
-                    Debug.Log("You landed on a shopping tile!");
                     break;
                 }
                 else 
@@ -152,7 +138,6 @@ public class Player : MonoBehaviour
         if (finalTile.tileTypeID != 3 && finalTile.tileTypeID != 5)
         {
             currentTileID = finalTile.tileID;
-            //this.transform.position = finalTile.transform.position;
             currentTile = finalTile;
             SetNewTargetPosition(currentTile.transform.position);
             if (currentTile != null)
@@ -171,18 +156,15 @@ public class Player : MonoBehaviour
     {
         if (theStateManager.canMove == true)
         {
-            //Debug.Log("Can Move");
             if (theStateManager.IsDoneRolling == false || theStateManager.IsDoneClicking == true || theStateManager.currentPlayerID != playerID)
             {
                 //je kan nog niet bewegen (nog geen roll of al geklikt)
-                //Debug.Log(playerID);
                 return;
             }
 
             if (theStateManager.IsCollectingStar == false && theStateManager.IsCurrentlyShopping == false)
             {
-                PlayerMovement();                   
-                //hier is currentTile gebruikt omdat de functie importeren van tile.cs niet lukte                   
+                PlayerMovement();                                      
             }
 
             if (theStateManager.IsCollectingStar == true || theStateManager.IsCurrentlyShopping == true)
@@ -205,7 +187,6 @@ public class Player : MonoBehaviour
                 value2 = theStateManager.DiceRollers[1].DiceValue;
                 value3 = theStateManager.DiceRollers[2].DiceValue;
 
-                //Debug.Log(AllDice[i].DiceValue);
                 switch(theStateManager.amountOfDice)
                 {
                     case 1:
@@ -277,14 +258,12 @@ public class Player : MonoBehaviour
         switch(playerID)
         {
             case 0:
-                //theGlobalDataManager.P1currentTile = currentTile;
                 theGlobalDataManager.P1currentTileID = currentTileID;
                 theGlobalDataManager.P1amountOfCoins = amountOfCoins;
                 theGlobalDataManager.P1amountOfStars = amountOfStars;
                 theGlobalDataManager.P1itemsInventory = itemsInventory;
                 break;
             case 1:
-                //theGlobalDataManager.P2currentTile = currentTile;
                 theGlobalDataManager.P2currentTileID = currentTileID;
                 theGlobalDataManager.P2amountOfCoins = amountOfCoins;
                 theGlobalDataManager.P2amountOfStars = amountOfStars;
