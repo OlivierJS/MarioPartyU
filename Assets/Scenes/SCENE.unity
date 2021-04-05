@@ -2240,6 +2240,11 @@ PrefabInstance:
       objectReference: {fileID: 498926725}
     - target: {fileID: 8917627951641617542, guid: fa2c811746e8f124b9e437db21ca486c,
         type: 3}
+      propertyPath: DiceTotal
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917627951641617542, guid: fa2c811746e8f124b9e437db21ca486c,
+        type: 3}
       propertyPath: currentTile
       value: 
       objectReference: {fileID: 0}
@@ -5834,6 +5839,11 @@ PrefabInstance:
       propertyPath: PrevTile
       value: 
       objectReference: {fileID: 1686885053}
+    - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
+        type: 3}
+      propertyPath: tileTypeID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4784468536862096626, guid: 6412450c1a7f3b74799e71b19557d47e,
         type: 3}
       propertyPath: LuckySpaceMenu

@@ -10,6 +10,7 @@ public class Tile : MonoBehaviour
     Renderer m_Renderer;
     public Texture2D[] TileTexture;
     StateManager theStateManager;
+    GlobalDataManager theGlobalDataManager;
     Player player;
     Player otherplayer;
     public GameObject LuckySpaceMenu;
@@ -57,6 +58,7 @@ public class Tile : MonoBehaviour
             m_Renderer = GetComponent<Renderer>();
             tileTypeSetup();
             theStateManager = GameObject.FindObjectOfType<StateManager>();
+            theGlobalDataManager = GameObject.FindObjectOfType<GlobalDataManager>();
         }
 
         public Tile[] NextTiles;
@@ -163,9 +165,25 @@ public class Tile : MonoBehaviour
         {
             case 1:
                 player.amountOfCoins += UnityEngine.Random.Range(3, 6);
+                if (theStateManager.currentPlayerID == 0)
+                {
+                    theGlobalDataManager.P1amountOfCoins = player.amountOfCoins;
+                }
+                else
+                {
+                    theGlobalDataManager.P2amountOfCoins = player.amountOfCoins;
+                }
             break;
             case 2:
                 otherplayer.amountOfCoins -= UnityEngine.Random.Range(3, 6);
+                if (theStateManager.currentPlayerID == 0)
+                {
+                    theGlobalDataManager.P2amountOfCoins = otherplayer.amountOfCoins;
+                }
+                else
+                {
+                    theGlobalDataManager.P1amountOfCoins = otherplayer.amountOfCoins;
+                }
                 if (otherplayer.amountOfCoins < 0)
                 {
                     otherplayer.amountOfCoins = 0;
@@ -178,6 +196,16 @@ public class Tile : MonoBehaviour
                 temp_coin2 = otherplayer.amountOfCoins;
                 player.amountOfCoins = temp_coin2; 
                 otherplayer.amountOfCoins = temp_coin;
+                if (theStateManager.currentPlayerID == 0)
+                {
+                    theGlobalDataManager.P1amountOfCoins = player.amountOfCoins;
+                    theGlobalDataManager.P2amountOfCoins = otherplayer.amountOfCoins;
+                }
+                else
+                {
+                    theGlobalDataManager.P2amountOfCoins = player.amountOfCoins;
+                    theGlobalDataManager.P1amountOfCoins = otherplayer.amountOfCoins;
+                }
             break;
             case 4:
                 GetItem();
